@@ -295,7 +295,7 @@ class Database {
     const filename = 'i' + time.day + time.hour + time.minute + time.seconds;
     const path = time.year + '/' + time.month + '/' + filename + '.jpg';
     const filepath = path;
-    await storage.uploadToWP(imagePath, filepath);
+    await this.storage.uploadToWP(imagePath, filepath);
     
     const post_data = {
       post_author: process.env.WP_AUTHOR_ID,
