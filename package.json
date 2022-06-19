@@ -1,0 +1,21 @@
+{
+  "name": "grabbot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "basic-ftp": "^4.6.6",
+    "cheerio": "^1.0.0-rc.11",
+    "fs-extra": "^10.1.0",
+    "ftp": "^0.3.10",
+    "https": "^1.0.0",
+    "mysql": "^2.18.1"
+  }
+}
