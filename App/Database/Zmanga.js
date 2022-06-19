@@ -23,7 +23,6 @@ class Database {
     // DECLARING VARIABLES
     const query = this.query;
     const nowtime = functions.getTimestamps();
-
     
     const postData = {
         post_author: process.env.WP_AUTHOR_ID,
