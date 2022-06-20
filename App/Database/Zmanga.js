@@ -22,8 +22,7 @@ class Database {
   connectDatabase() {
     return new Promise((resolve, reject) => {
       this.connection.connect((err) => {
-        if (err) reject(err);
-        resolve(true)
+        err ? reject(err) : resolve(true);
       });
     });
   }
