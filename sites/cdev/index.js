@@ -55,6 +55,7 @@ const db = new Database(storage);
   } catch (e) {
     console.log(e.message);
   }
-
-
+  
+  storage.end();
+  db.connection.end();
 })();
