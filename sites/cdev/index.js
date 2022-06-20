@@ -57,5 +57,5 @@ const db = new Database(storage);
   }
   
   storage.closeFTP();
-  db.connection.closeDatabase();
+  db.closeDatabase();
 })();
