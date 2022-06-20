@@ -12,7 +12,7 @@ class Storage {
     this.storage = new Ftp();
   }
   
-  connect() {
+  async connectFTP() {
     this.wp.connect({
       host: process.env.WP_FTP_HOST,
       port: process.env.WP_FTP_PORT,
@@ -25,11 +25,20 @@ class Storage {
       user: process.env.STORAGE_FTP_USER,
       password: process.env.STORAGE_FTP_PASS,
     });
+    await this.checkConnection(this.wp);
+    await this.checkConnection(this.storage);
+    return Promise.resolve(true);
   }
   
-  end() {
+  closeFTP() {
     this.storage.end();
     this.wp.end();
+  }
+  
+  checkConnection(ftp) {
+    return new Promise((resolve) => {
+      ftp.on('ready', resolve(true));
+    });
   }
 
   uploadToWP(imagePath, path) {
