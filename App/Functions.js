@@ -50,10 +50,6 @@ class Functions {
       });
     });
   }
-  
-  getEnv() {
-    console.log(process.env.GLOBAL_DEX);
-  }
 
 }
 

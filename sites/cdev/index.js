@@ -1,6 +1,6 @@
 process.on('SIGINT', async () => {
   storage.closeFTP();
-  db.connection.closeDatabase();
+  db.closeDatabase();
 });
 
 require('dotenv').config();
@@ -48,7 +48,7 @@ const db = new Database(storage);
         }
       }
 
-      console.log('REST 5 MINUTES');
+      console.log('REST 5 MINUTES...');
       await new Promise(resolve => setTimeout(resolve, (60000 * 5)));
 
     }

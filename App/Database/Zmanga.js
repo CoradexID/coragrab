@@ -153,7 +153,9 @@ class Database {
     }); 
 
     await Promise.all([createSerie,createMeta, createCategory]);
-    return Promise.resolve(post);
+    
+    const result = await query('SELECT * FROM wp_posts WHERE ID = ?', [post.insertId]);
+    return Promise.resolve(result[0]);
   }
 
   async insertChapter(mangaId, data, uploadContent = true) {
@@ -163,7 +165,6 @@ class Database {
     let content = data.content;
     
     const serie = await query('SELECT * FROM wp_posts WHERE id = ?', [mangaId]);
-    console.log(serie[0]);
     
     if (uploadContent) {
       const slug = serie[0].post_name;
@@ -179,7 +180,6 @@ class Database {
       });
       contents = contents.join('');
       content = contents;
-      console.log(content);
       
       await this.storage.uploadsToStorage(data.contentPath, destination);
     }
@@ -243,7 +243,8 @@ class Database {
     });
     
     await Promise.all([createGuid, createMeta, createChapter]);
-    return Promise.resolve(post);
+    const result = await query('SELECT * FROM wp_posts WHERE ID = ?', [post.insertId]);
+    return Promise.resolve(result[0]);
   }
 
   async PJCheck(data) {
@@ -298,7 +299,7 @@ class Database {
     let posts = await this.query('SELECT post_id FROM wp_postmeta WHERE meta_key = ? AND meta_value = ?', ['oxy_series', id]);
 
     const result_array = posts.map((item) => item.post_id);
-    if (!result_array[0]) return [];
+    if (!result_array[0]) return data.chapters;
     
     posts = await this.query('SELECT meta_value FROM wp_postmeta WHERE post_id IN (?) AND meta_key = ?', [result_array, 'oxy_ch']);
 
