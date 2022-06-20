@@ -1,6 +1,7 @@
 process.on('SIGINT', async () => {
   storage.end();
   db.connection.end();
+  process.exit();
 });
 
 require('dotenv').config();
@@ -14,7 +15,13 @@ const db = new Database(storage);
 (async () => {
   storage.connect();
   await db.connectDatabase();
+  
+  const test = await db.query('SELECT * FROM wp_terms');
+  console.log(test);
 
+  storage.end();
+  db.connection.end();
+  process.exit();
   try {
     while (true) {
       const feeds = await scraper.getFeed();
@@ -56,7 +63,5 @@ const db = new Database(storage);
     console.log(e.message);
   }
 
-  storage.end();
-  db.connection.end();
 
 })();
