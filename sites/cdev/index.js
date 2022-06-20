@@ -1,6 +1,6 @@
 process.on('SIGINT', async () => {
-  storage.end();
-  db.connection.end();
+  storage.closeFTP();
+  db.connection.closeDatabase();
 });
 
 require('dotenv').config();
@@ -12,7 +12,7 @@ const scraper = require(process.env.HOME_DIR + 'App/Scraper/' + process.env.MAIN
 const db = new Database(storage);
 
 (async () => {
-  await storage.connect();
+  await storage.connectFTP();
   await db.connectDatabase();
   
   try {
@@ -56,6 +56,6 @@ const db = new Database(storage);
     console.log(e.message);
   }
   
-  storage.end();
-  db.connection.end();
+  storage.closeFTP();
+  db.connection.closeDatabase();
 })();
