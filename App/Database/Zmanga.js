@@ -27,6 +27,14 @@ class Database {
     });
   }
 
+  closeDatabase() {
+    return new Promise((resolve, reject) => {
+      this.connection.end((err) => {
+        err ? reject(err) : resolve(true);
+      });
+    });
+  }
+  
   async insertManga(data, setFeaturedImage = true) {
     // DECLARING VARIABLES
     const query = this.query;
