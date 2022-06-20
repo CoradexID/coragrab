@@ -51,7 +51,6 @@ class Storage {
   
   async uploadsToStorage(paths, destination) {
     const storage = this.storage;
-    let contents = '';
     const promises = [];
     
     await new Promise((resolve) => {
@@ -59,9 +58,6 @@ class Storage {
         for (const path of paths) {
           const filename = path.split('/').pop();
           const filepath = destination + filename;
-          const src = process.env.STORAGE_URL + filepath;
-          console.log(src);
-          contents = contents + '<img src="' + src + '"/>';
           const func = new Promise((resolve) => {
             storage.put(path, filepath, (e) => {
               if (e) console.log(e);
@@ -75,7 +71,7 @@ class Storage {
     })
     
     await Promise.all(promises);
-    return Promise.resolve(contents);
+    return Promise.resolve(true);
   }
 
 }

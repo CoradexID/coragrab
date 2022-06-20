@@ -1,15 +1,18 @@
 process.on('SIGINT', async () => {
+  storage.end();
   db.connection.end();
-  console.log('UDAHAN');
-  process.exit();
 });
 
 require('dotenv').config();
-const functions = require("./App/Functions.js");
-const db = require('./App/Database/' + process.env.MAIN_THEME + '.js');
-const scraper = require('./App/Scraper/' + process.env.MAIN_TARGET + '.js');
+const functions = require(process.env.HOME_DIR + 'App/Functions.js');
+const storage = require(process.env.HOME_DIR + 'App/Storage.js');
+const Database = require(process.env.HOME_DIR + 'App/Database/' + process.env.MAIN_THEME + '.js');
+const scraper = require(process.env.HOME_DIR + 'App/Scraper/' + process.env.MAIN_TARGET + '.js');
+
+const db = new Database(storage);
 
 (async () => {
+  storage.connect();
   db.connection.connect();
 
   try {
@@ -53,8 +56,7 @@ const scraper = require('./App/Scraper/' + process.env.MAIN_TARGET + '.js');
     console.log(e.message);
   }
 
+  storage.end();
   db.connection.end();
-  console.log('UDAHAN');
-  process.exit();
 
 })();

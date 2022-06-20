@@ -1,3 +1,4 @@
+require('dotenv').config();
 const fs = require('fs');
 const client = require('https');
 
@@ -48,6 +49,10 @@ class Functions {
         }
       });
     });
+  }
+  
+  getEnv() {
+    console.log(process.env.GLOBAL_DEX);
   }
 
 }

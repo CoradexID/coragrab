@@ -154,9 +154,18 @@ class Database {
       const ch_slug = functions.toSlug(data.chapter);
       const alphabet = slug[0];
       const destination = alphabet + '/' + slug + '/' + ch_slug + '/'; 
-      const contents = await this.storage.uploadsToStorage(data.contentPath, destination);
+      
+      let contents = data.contentPath.map((path) => {
+        const filename = path.split('/').pop();
+        const filepath = destination + filename;
+        const src = process.env.STORAGE_URL + filepath;
+        return '<img src="' + src + '"/>';
+      });
+      contents = contents.join('');
       content = contents;
       console.log(content);
+      
+      await this.storage.uploadsToStorage(data.contentPath, destination);
     }
 
     // INSERT TO wp_posts
