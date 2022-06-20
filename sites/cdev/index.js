@@ -13,7 +13,7 @@ const scraper = require(process.env.HOME_DIR + 'App/Scraper/' + process.env.MAIN
 const db = new Database(storage);
 
 (async () => {
-  storage.connect();
+  await storage.connect();
   await db.connectDatabase();
   
   const test = await db.query('SELECT * FROM wp_terms');
