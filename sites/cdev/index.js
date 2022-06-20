@@ -13,7 +13,7 @@ const db = new Database(storage);
 
 (async () => {
   storage.connect();
-  db.connection.connect();
+  await db.connectDatabase();
 
   try {
     while (true) {
