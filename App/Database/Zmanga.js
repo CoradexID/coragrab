@@ -67,84 +67,16 @@ class Database {
     const post = await query('INSERT INTO wp_posts SET ?', postData);
     
     const createSerie = new Promise(async (resolve, reject) => {
-      const guid = process.env.HOME_URL + '?post_type=series&#038;p=' + post.insertId;
-      await query('UPDATE wp_posts SET guid = ? WHERE id = ?', [guid, post.insertId]);
-      const term_data = { name: data.title, slug: functions.toSlug(data.title) };
-      const term = await query('INSERT INTO wp_terms SET ?', term_data);
-      const taxonomy_data = {
-        term_id: term.insertId,
-        taxonomy: 'seri',
-        description: '',
-        count: 0
-      }
-      const taxonomy = await query('INSERT INTO wp_term_taxonomy SET ?', taxonomy_data);
-      const relationships_data = {
-        object_id: post.insertId,
-        term_taxonomy_id: taxonomy.insertId
-      }
-      await query('INSERT INTO wp_term_relationships SET ?', relationships_data);
-      resolve(true);
-    });
-    
-    const createMeta = new Promise(async (resolve, reject) => {
-      // ONLY ZMANGA
-      let cover = data.cover;
-      
-      if (setFeaturedImage) {
-        const image = await this.uploadImage(data.coverPath, post.insertId);
-        await this.setFeaturedImage(post.insertId, image.ID);
-        // ONLY ZMANGA
-        cover = image.guid;
-      }
-      
-      const metas_data = [
-        [post.insertId, 'oxy_coverurl', cover],
-        [post.insertId, 'oxy_title', data.title],
-        [post.insertId, 'oxy_alternative', data.alternative],
-        [post.insertId, 'oxy_type', data.type],
-        [post.insertId, 'oxy_status', data.status],
-        [post.insertId, 'oxy_author', data.author],
-        [post.insertId, 'oxy_artist', data.artist],
-        [post.insertId, 'oxy_published', data.published],
-        [post.insertId, 'oxy_score', data.score],
-        [post.insertId, 'oxy_project', 'No'],
-        [post.insertId, 'oxy_adult', 'No'],
-      ]
-      
-      await query('INSERT INTO wp_postmeta (post_id, meta_key, meta_value) VALUES ?', [metas_data]);
-      resolve(true);
-    }); 
-    
-    const createCategory = new Promise(async (resolve, reject) => {
-      if (!data.genres[0]) {
-        resolve(true);
-        return;
-      }
-      
-      const terms = data.genres.map(genre => genre);
-      
-      const categoryExist = await query('SELECT * FROM wp_terms WHERE name IN (?)', [terms]);
-      const categoryCheck = categoryExist.map(value => value.name);
-      const categoryNotExist = terms.filter(value => !categoryCheck.includes(value));
-      
-      for (const category of categoryExist) {
-        const taxonomy = await query('SELECT * FROM wp_term_taxonomy WHERE term_id = ?', [category.term_id]);
-        const relationships_data = {
-          object_id: post.insertId,
-          term_taxonomy_id: taxonomy[0].term_taxonomy_id
-        }
-        const relationships = await query('INSERT INTO wp_term_relationships SET ?', [relationships_data]);
-        await query('UPDATE wp_term_taxonomy SET count = ? WHERE term_id = ?', [(taxonomy[0].count + 1), taxonomy[0].term_id]);
-      }
-      
-      for (const category of categoryNotExist) {
-        const term_data = { name: category, slug: functions.toSlug(category) };
+      try {
+        const guid = process.env.HOME_URL + '?post_type=series&#038;p=' + post.insertId;
+        await query('UPDATE wp_posts SET guid = ? WHERE id = ?', [guid, post.insertId]);
+        const term_data = { name: data.title, slug: functions.toSlug(data.title) };
         const term = await query('INSERT INTO wp_terms SET ?', term_data);
         const taxonomy_data = {
           term_id: term.insertId,
-          taxonomy: 'genre',
+          taxonomy: 'seri',
           description: '',
-          count: 1
+          count: 0
         }
         const taxonomy = await query('INSERT INTO wp_term_taxonomy SET ?', taxonomy_data);
         const relationships_data = {
@@ -152,9 +84,89 @@ class Database {
           term_taxonomy_id: taxonomy.insertId
         }
         await query('INSERT INTO wp_term_relationships SET ?', relationships_data);
+        resolve(true);
+      } catch (e) {
+        reject(e);
       }
-      
-      resolve(true);
+    });
+    
+    const createMeta = new Promise(async (resolve, reject) => {
+      try {
+        // ONLY ZMANGA
+        let cover = data.cover;
+        
+        if (setFeaturedImage) {
+          const image = await this.uploadImage(data.coverPath, post.insertId);
+          await this.setFeaturedImage(post.insertId, image.ID);
+          // ONLY ZMANGA
+          cover = image.guid;
+        }
+        
+        const metas_data = [
+          [post.insertId, 'oxy_coverurl', cover],
+          [post.insertId, 'oxy_title', data.title],
+          [post.insertId, 'oxy_alternative', data.alternative],
+          [post.insertId, 'oxy_type', data.type],
+          [post.insertId, 'oxy_status', data.status],
+          [post.insertId, 'oxy_author', data.author],
+          [post.insertId, 'oxy_artist', data.artist],
+          [post.insertId, 'oxy_published', data.published],
+          [post.insertId, 'oxy_score', data.score],
+          [post.insertId, 'oxy_project', 'No'],
+          [post.insertId, 'oxy_adult', 'No'],
+        ]
+        
+        await query('INSERT INTO wp_postmeta (post_id, meta_key, meta_value) VALUES ?', [metas_data]);
+        resolve(true);
+      } catch (e) {
+        reject(e);
+      }
+    }); 
+    
+    const createCategory = new Promise(async (resolve, reject) => {
+      try {
+        if (!data.genres[0]) {
+          resolve(true);
+          return;
+        }
+        
+        const terms = data.genres.map(genre => genre);
+        
+        const categoryExist = await query('SELECT * FROM wp_terms WHERE name IN (?)', [terms]);
+        const categoryCheck = categoryExist.map(value => value.name);
+        const categoryNotExist = terms.filter(value => !categoryCheck.includes(value));
+        
+        for (const category of categoryExist) {
+          const taxonomy = await query('SELECT * FROM wp_term_taxonomy WHERE term_id = ?', [category.term_id]);
+          const relationships_data = {
+            object_id: post.insertId,
+            term_taxonomy_id: taxonomy[0].term_taxonomy_id
+          }
+          const relationships = await query('INSERT INTO wp_term_relationships SET ?', [relationships_data]);
+          await query('UPDATE wp_term_taxonomy SET count = ? WHERE term_id = ?', [(taxonomy[0].count + 1), taxonomy[0].term_id]);
+        }
+        
+        for (const category of categoryNotExist) {
+          const term_data = { name: category, slug: functions.toSlug(category) };
+          const term = await query('INSERT INTO wp_terms SET ?', term_data);
+          const taxonomy_data = {
+            term_id: term.insertId,
+            taxonomy: 'genre',
+            description: '',
+            count: 1
+          }
+          const taxonomy = await query('INSERT INTO wp_term_taxonomy SET ?', taxonomy_data);
+          const relationships_data = {
+            object_id: post.insertId,
+            term_taxonomy_id: taxonomy.insertId
+          }
+          await query('INSERT INTO wp_term_relationships SET ?', relationships_data);
+        }
+        
+        resolve(true);
+      } catch (e) {
+        reject(e);
+      }
     }); 
 
     await Promise.all([createSerie,createMeta, createCategory]);
