@@ -116,6 +116,11 @@ class Database {
     }); 
     
     const createCategory = new Promise(async (resolve, reject) => {
+      if (!data.genres[0]) {
+        resolve(true);
+        return;
+      }
+      
       const terms = data.genres.map(genre => genre);
       
       const categoryExist = await query('SELECT * FROM wp_terms WHERE name IN (?)', [terms]);
