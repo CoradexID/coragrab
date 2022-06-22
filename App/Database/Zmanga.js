@@ -342,13 +342,15 @@ class Database {
   }
   
   async uploadImage(imagePath, postParent = 0) {
+    const storage = this.storage;
+    
     const time = functions.getTime();
     const nowtime = functions.getTimestamps();
     const filename = 'i' + time.day + time.hour + time.minute + time.seconds;
     const path = time.year + '/' + time.month + '/' + filename + '.jpg';
     const filepath = path;
     console.log(imagePath, filepath);
-    await this.storage.uploadToWP(imagePath, filepath);
+    await storage.uploadToWP(imagePath, filepath);
     console.log('Upload done');
     
     const post_data = {
