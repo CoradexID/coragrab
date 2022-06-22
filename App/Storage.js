@@ -18,12 +18,14 @@ class Storage {
       port: process.env.WP_FTP_PORT,
       user: process.env.WP_FTP_USER,
       password: process.env.WP_FTP_PASS,
+      keepalive: 5000
     });
     this.storage.connect({
       host: process.env.STORAGE_FTP_HOST,
       port: process.env.STORAGE_FTP_PORT,
       user: process.env.STORAGE_FTP_USER,
       password: process.env.STORAGE_FTP_PASS,
+      keepalive: 5000
     });
     await this.checkConnection(this.wp);
     await this.checkConnection(this.storage);
@@ -46,6 +48,11 @@ class Storage {
     let folders = path.split('/');
     folders.pop();
     folders = folders.join('/');
+    
+    wp.status((err, status) => {
+      if (err) throw err;
+      console.log(status);
+    });
 
     await new Promise((resolve, reject) => {
       wp.mkdir(folders, true, function (err) {
