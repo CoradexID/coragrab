@@ -45,6 +45,7 @@ class Storage {
 
   async uploadToWP(imagePath, path) {
     const wp = this.wp;
+    console.log('Uploadtowp');
     let folders = path.split('/');
     folders.pop();
     folders = folders.join('/');
@@ -53,12 +54,15 @@ class Storage {
       if (err) throw err;
       console.log(status);
     });
-
+    
+    console.log('A');
     await new Promise((resolve, reject) => {
       wp.mkdir(folders, true, function (err) {
         if (err) console.log(err);
+    console.log('B');
         wp.put(imagePath, path, function(err) {
           if (err) console.log(err);
+    console.log('C');
           resolve(true);
         })
       });
