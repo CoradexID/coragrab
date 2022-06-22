@@ -68,6 +68,7 @@ class Database {
     
     const createSerie = new Promise(async (resolve, reject) => {
       try {
+        console.log('create serie');
         const guid = process.env.HOME_URL + '?post_type=series&#038;p=' + post.insertId;
         await query('UPDATE wp_posts SET guid = ? WHERE id = ?', [guid, post.insertId]);
         const term_data = { name: data.title, slug: functions.toSlug(data.title) };
@@ -93,6 +94,7 @@ class Database {
     const createMeta = new Promise(async (resolve, reject) => {
       try {
         // ONLY ZMANGA
+        console.log('create meta');
         let cover = data.cover;
         
         if (setFeaturedImage) {
@@ -125,6 +127,7 @@ class Database {
     
     const createCategory = new Promise(async (resolve, reject) => {
       try {
+        console.log('create category');
         if (!data.genres[0]) {
           resolve(true);
           return;
