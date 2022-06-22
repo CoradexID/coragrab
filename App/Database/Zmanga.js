@@ -85,6 +85,7 @@ class Database {
           term_taxonomy_id: taxonomy.insertId
         }
         await query('INSERT INTO wp_term_relationships SET ?', relationships_data);
+        console.log('create serie complete');
         resolve(true);
       } catch (e) {
         reject(e);
@@ -119,6 +120,7 @@ class Database {
         ]
         
         await query('INSERT INTO wp_postmeta (post_id, meta_key, meta_value) VALUES ?', [metas_data]);
+        console.log('create meta complete');
         resolve(true);
       } catch (e) {
         reject(e);
@@ -166,6 +168,7 @@ class Database {
           await query('INSERT INTO wp_term_relationships SET ?', relationships_data);
         }
         
+        console.log('create category complete');
         resolve(true);
       } catch (e) {
         reject(e);
