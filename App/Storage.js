@@ -49,9 +49,9 @@ class Storage {
       folders = folders.join('/');
 
       wp.mkdir(folders, true, function (err) {
-        if (err) reject(err);
+        if (err) console.log(err);
         wp.put(imagePath, path, function(err) {
-          if (err) reject(err);
+          if (err) console.log(err);
           resolve(true);
         })
       });

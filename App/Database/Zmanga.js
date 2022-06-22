@@ -99,8 +99,11 @@ class Database {
         let cover = data.cover;
         
         if (setFeaturedImage) {
+          console.log('upload');
           const image = await this.uploadImage(data.coverPath, post.insertId);
+          console.log('set');
           await this.setFeaturedImage(post.insertId, image.ID);
+          console.log('set done');
           // ONLY ZMANGA
           cover = image.guid;
         }
