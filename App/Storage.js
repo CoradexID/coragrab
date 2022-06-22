@@ -41,13 +41,13 @@ class Storage {
     });
   }
 
-  uploadToWP(imagePath, path) {
+  async uploadToWP(imagePath, path) {
     const wp = this.wp;
-    return new Promise((resolve, reject) => {
-      let folders = path.split('/');
-      folders.pop();
-      folders = folders.join('/');
+    let folders = path.split('/');
+    folders.pop();
+    folders = folders.join('/');
 
+    await new Promise((resolve, reject) => {
       wp.mkdir(folders, true, function (err) {
         if (err) console.log(err);
         wp.put(imagePath, path, function(err) {
@@ -55,7 +55,9 @@ class Storage {
           resolve(true);
         })
       });
-    })
+    });
+    
+    return Promise.resolve(true);
   }
   
   async uploadsToStorage(paths, destination) {
