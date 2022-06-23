@@ -49,10 +49,14 @@ class Storage {
     await this.storage.cd('/');
 
     for (const path of paths) {
-      const filename = path.split('/').pop();
-      const filepath = destination + filename;
-      
-      await this.storage.uploadFrom(path, filepath);
+      try {
+        const filename = path.split('/').pop();
+        const filepath = destination + filename;
+        
+        await this.storage.uploadFrom(path, filepath);
+      } catch (e) {
+        console.log(e);
+      }
     }
     
     return Promise.resolve(true);
