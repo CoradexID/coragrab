@@ -198,7 +198,7 @@ class Database {
       contents = contents.join('');
       content = contents;
       
-      await this.storage.uploadsToStorage(data.contentPath, destination);
+      await this.storage.uploadToStorage(data.contentPath, destination);
     }
 
     // INSERT TO wp_posts
