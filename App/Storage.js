@@ -55,7 +55,7 @@ class Storage {
         
         await this.storage.uploadFrom(path, filepath);
       } catch (e) {
-        console.log(e);
+        console.log(e.message);
       }
     }
     
