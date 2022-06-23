@@ -1,5 +1,4 @@
 const ftp = require("basic-ftp")
-require('dotenv').config();
 
 const storage = require(process.env.HOME_DIR + 'App/Storage.js');
 
