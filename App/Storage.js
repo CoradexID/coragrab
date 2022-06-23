@@ -27,29 +27,27 @@ class Storage {
   }
 
   async uploadToWP(imagePath, path) {
-    const wp = this.wp;
-
     let folders = path.split('/');
     folders.pop();
     folders = folders.join('/');
 
-    await wp.ensureDir(folders);
-    await wp.cd('/');
+    await this.wp.ensureDir(folders);
+    await this.wp.cd('/');
 
-    await wp.uploadFrom(imagePath, path);
+    await this.wp.uploadFrom(imagePath, path);
 
     return Promise.resolve(true);
   }
 
   async uploadsToStorage(paths, destination) {
-    const storage = this.storage;
-    const promises = [];
+    await this.storage.ensureDir(destination);
+    await this.storage.cd('/');
 
     for (const path of paths) {
       const filename = path.split('/').pop();
       const filepath = destination + filename;
       
-      await uploadFrom(path, filepath);
+      await this.storage.uploadFrom(path, filepath);
     }
     
     return Promise.resolve(true);
