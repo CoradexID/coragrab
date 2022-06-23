@@ -4,7 +4,6 @@ require('dotenv').config();
 const storage = require(process.env.HOME_DIR + 'App/Storage.js');
 
 (async () => {
-  console.log(process.env);
   await storage.connectFTP();
   
   try {
