@@ -68,7 +68,6 @@ class Database {
     
     const createSerie = new Promise(async (resolve, reject) => {
       try {
-        console.log('create serie');
         const guid = process.env.HOME_URL + '?post_type=series&#038;p=' + post.insertId;
         await query('UPDATE wp_posts SET guid = ? WHERE id = ?', [guid, post.insertId]);
         const term_data = { name: data.title, slug: functions.toSlug(data.title) };
@@ -85,7 +84,6 @@ class Database {
           term_taxonomy_id: taxonomy.insertId
         }
         await query('INSERT INTO wp_term_relationships SET ?', relationships_data);
-        console.log('create serie complete');
         resolve(true);
       } catch (e) {
         reject(e);
@@ -95,15 +93,11 @@ class Database {
     const createMeta = new Promise(async (resolve, reject) => {
       try {
         // ONLY ZMANGA
-        console.log('create meta');
         let cover = data.cover;
         
         if (setFeaturedImage) {
-          console.log('upload');
           const image = await this.uploadImage(data.coverPath, post.insertId);
-          console.log('set');
           await this.setFeaturedImage(post.insertId, image.ID);
-          console.log('set done');
           // ONLY ZMANGA
           cover = image.guid;
         }
@@ -123,7 +117,6 @@ class Database {
         ]
         
         await query('INSERT INTO wp_postmeta (post_id, meta_key, meta_value) VALUES ?', [metas_data]);
-        console.log('create meta complete');
         resolve(true);
       } catch (e) {
         reject(e);
@@ -132,7 +125,6 @@ class Database {
     
     const createCategory = new Promise(async (resolve, reject) => {
       try {
-        console.log('create category');
         if (!data.genres[0]) {
           resolve(true);
           return;
@@ -171,7 +163,6 @@ class Database {
           await query('INSERT INTO wp_term_relationships SET ?', relationships_data);
         }
         
-        console.log('create category complete');
         resolve(true);
       } catch (e) {
         reject(e);
@@ -342,16 +333,13 @@ class Database {
   }
   
   async uploadImage(imagePath, postParent = 0) {
-    const storage = this.storage;
-    
     const time = functions.getTime();
     const nowtime = functions.getTimestamps();
+    
     const filename = 'i' + time.day + time.hour + time.minute + time.seconds;
     const path = time.year + '/' + time.month + '/' + filename + '.jpg';
     const filepath = path;
-    console.log(imagePath, filepath);
-    await storage.uploadToWP(imagePath, filepath);
-    console.log('Upload done');
+    await this.storage.uploadToWP(imagePath, filepath);
     
     const post_data = {
       post_author: process.env.WP_AUTHOR_ID,
