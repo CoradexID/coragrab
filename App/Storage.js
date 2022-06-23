@@ -17,7 +17,7 @@ class Storage {
       user: process.env.WP_FTP_USER,
       password: process.env.WP_FTP_PASS,
     });
-    await this.storage.connect({
+    await this.storage.access({
       host: process.env.STORAGE_FTP_HOST,
       port: process.env.STORAGE_FTP_PORT,
       user: process.env.STORAGE_FTP_USER,
