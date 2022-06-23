@@ -44,7 +44,7 @@ class Storage {
     return Promise.resolve(true);
   }
 
-  async uploadsToStorage(paths, destination) {
+  async uploadToStorage(paths, destination) {
     await this.storage.ensureDir(destination);
     await this.storage.cd('/');
 
