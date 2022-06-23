@@ -12,7 +12,7 @@ const storage = require(process.env.HOME_DIR + 'App/Storage.js');
       '/sdcard/image2.png',
       '/sdcard/image3.png',
     ];
-    await storage.uploadsToStorage(paths, 'oke/woy');
+    await storage.uploadsToStorage(paths, 'oke/woy/');
   } catch (e) {}
   
   storage.closeFTP();
