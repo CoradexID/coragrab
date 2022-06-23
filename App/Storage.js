@@ -1,4 +1,4 @@
-const ftp = require('ftp-basic');
+const ftp = require('basic-ftp');
 require('dotenv').config();
 
 const functions = require('./Functions.js');
