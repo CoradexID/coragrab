@@ -1,22 +1,14 @@
 const ftp = require("basic-ftp")
 require('dotenv').config();
 
+const storage = require(process.env.HOME_DIR + 'App/Storage.js');
+
 (async () => {
-  const client = new ftp.Client()
+  await storage.connectFTP();
+  
   try {
-    await client.access({
-      host: process.env.WP_FTP_HOST,
-      port: process.env.WP_FTP_PORT,
-      user: process.env.WP_FTP_USER,
-      password: process.env.WP_FTP_PASS
-    })
-    await client.ensureDir("test_dir/yolo/oke");
-    console.log(await client.pwd());
-    await client.cd('/');
-    console.log(await client.pwd());
-  }
-  catch(err) {
-    console.log(err)
-  }
-  client.close()
+    await storage.uploadToWP('/sdcard/image.png', 'oke/woy');
+  } catch (e) {}
+  
+  storage.closeFTP();
 })();
