@@ -25,6 +25,11 @@ class Storage {
     });
     return Promise.resolve(true);
   }
+  
+  closeFTP() {
+    this.wp.close();
+    this.storage.close();
+  }
 
   async uploadToWP(imagePath, path) {
     let folders = path.split('/');
