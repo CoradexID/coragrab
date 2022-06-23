@@ -47,7 +47,7 @@ class Database {
         post_content: data.sinopsys,
         post_title: data.title,
         post_excerpt: '',
-        post_status: 'publish',
+        post_status: 'private',
         comment_status: 'open',
         ping_status: 'closed',
         post_password: '',
@@ -60,7 +60,7 @@ class Database {
         post_parent: 0,
         guid: '',
         menu_order: 0,
-        post_type: 'series',
+        post_type: 'manga',
         post_mime_type: '',
         comment_count: 0
       };
