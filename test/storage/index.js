@@ -11,9 +11,9 @@ require('dotenv').config();
       password: process.env.WP_FTP_PASS
     })
     await client.ensureDir("test_dir/yolo/oke");
-    await client.pwd();
+    console.log(await client.pwd());
     await client.cd('/');
-    await client.pwd();
+    console.log(await client.pwd());
   }
   catch(err) {
     console.log(err)
