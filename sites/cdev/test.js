@@ -8,7 +8,6 @@ const db = new Database(storage);
 
 async function run() {
   await storage.connectFTP();
-  await db.connectDatabase();
   
   console.log('start');
   try {
@@ -25,6 +24,7 @@ async function run() {
 }
 
 (async () => {
+  await db.connectDatabase();
   while (true) {
     await run();
     console.log('REST 10 SECONDS');
