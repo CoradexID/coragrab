@@ -68,7 +68,7 @@ class Database {
     
     const createSerie = new Promise(async (resolve, reject) => {
       try {
-        const guid = process.env.HOME_URL + '?post_type=series&#038;p=' + post.insertId;
+        const guid = process.env.HOME_URL + '?post_type=manga&#038;p=' + post.insertId;
         await query('UPDATE wp_posts SET guid = ? WHERE id = ?', [guid, post.insertId]);
         const term_data = { name: data.title, slug: functions.toSlug(data.title) };
         const term = await query('INSERT INTO wp_terms SET ?', term_data);
