@@ -74,7 +74,7 @@ class Database {
         const term = await query('INSERT INTO wp_terms SET ?', term_data);
         const taxonomy_data = {
           term_id: term.insertId,
-          taxonomy: 'seri',
+          taxonomy: 'category',
           description: '',
           count: 0
         }
@@ -151,7 +151,7 @@ class Database {
           const term = await query('INSERT INTO wp_terms SET ?', term_data);
           const taxonomy_data = {
             term_id: term.insertId,
-            taxonomy: 'genre',
+            taxonomy: 'genres',
             description: '',
             count: 1
           }
