@@ -92,28 +92,28 @@ class Database {
     
     const createMeta = new Promise(async (resolve, reject) => {
       try {
-        // ONLY ZMANGA
+        // ONLY MangaReader
         let cover = data.cover;
         
         if (setFeaturedImage) {
           const image = await this.uploadImage(data.coverPath, post.insertId);
           await this.setFeaturedImage(post.insertId, image.ID);
-          // ONLY ZMANGA
+          // ONLY MangaReader
           cover = image.guid;
         }
         
         const metas_data = [
-          [post.insertId, 'oxy_coverurl', cover],
-          [post.insertId, 'oxy_title', data.title],
-          [post.insertId, 'oxy_alternative', data.alternative],
-          [post.insertId, 'oxy_type', data.type],
-          [post.insertId, 'oxy_status', data.status],
-          [post.insertId, 'oxy_author', data.author],
-          [post.insertId, 'oxy_artist', data.artist],
-          [post.insertId, 'oxy_published', data.published],
-          [post.insertId, 'oxy_score', data.score],
-          [post.insertId, 'oxy_project', 'No'],
-          [post.insertId, 'oxy_adult', 'No'],
+          [post.insertId, 'ero_image', cover],
+          [post.insertId, 'ero_japanese', data.alternative],
+          [post.insertId, 'ero_type', data.type],
+          [post.insertId, 'ero_status', data.status],
+          [post.insertId, 'ero_author', data.author],
+          [post.insertId, 'ero_artist', data.artist],
+          [post.insertId, 'ero_published', data.published],
+          [post.insertId, 'ero_score', data.score],
+          [post.insertId, 'ero_project', '0'],
+          [post.insertId, 'ero_hot', '0'],
+          [post.insertId, 'ero_slider', '0'],
         ]
         
         await query('INSERT INTO wp_postmeta (post_id, meta_key, meta_value) VALUES ?', [metas_data]);
