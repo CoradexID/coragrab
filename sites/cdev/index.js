@@ -16,7 +16,6 @@ const db = new Database(storage);
   await db.connectDatabase();
   while (true) {
 
-
     const feeds = await scraper.getFeed();
     for (const feed of feeds) {
       try {
