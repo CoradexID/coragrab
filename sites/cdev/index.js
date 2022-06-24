@@ -1,8 +1,3 @@
-process.on('SIGINT', async () => {
-  storage.closeFTP();
-  db.closeDatabase();
-});
-
 require('dotenv').config();
 const functions = require(process.env.HOME_DIR + 'App/Functions.js');
 const storage = require(process.env.HOME_DIR + 'App/Storage.js');
@@ -11,11 +6,10 @@ const scraper = require(process.env.HOME_DIR + 'App/Scraper/' + process.env.MAIN
 
 const db = new Database(storage);
 
-(async () => {
-  await storage.connectFTP();
-  await db.connectDatabase();
-  while (true) {
-
+async function run() {
+  try {
+    await storage.connectFTP();
+    await db.connectDatabase();
 
     const feeds = await scraper.getFeed();
     for (const feed of feeds) {
@@ -59,11 +53,21 @@ const db = new Database(storage);
         console.log(e.message);
       }
     }
-
-    console.log('REST 5 MINUTES...');
-    await new Promise(resolve => setTimeout(resolve, (60000 * 5)));
+    
+  } catch (e) {
+    console.log(e);
   }
 
   storage.closeFTP();
   db.closeDatabase();
+  
+  return Promise.resolve(true);
+}
+
+(async () => {
+  while (true) {
+    await run();
+    console.log('REST 10 MINUTES');
+    await new Promise(resolve => setTimeout(resolve, (60000 * 10)));
+  }
 })();
