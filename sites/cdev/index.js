@@ -17,6 +17,7 @@ async function run() {
         // MANGA CHECKER
         const manga = await db.mangaCheck(feed);
         console.log(manga);
+        
         if (manga.status == 1) {
           const mangaData = await scraper.getManga(feed.url);
           mangaData.title = feed.title;
