@@ -10,12 +10,14 @@ async function run() {
   await storage.connectFTP();
   await db.connectDatabase();
   
+  console.log('start');
   try {
     await new Promise(resolve => setTimeout(resolve, 5000));
   } catch (e) {
     console.log(e.message);
   }
-
+  
+  console.log('close');
   storage.closeFTP();
   // db.closeDatabase();
   
