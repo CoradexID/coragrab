@@ -44,7 +44,7 @@ async function run() {
     }
     
   } catch (e) {
-    console.log(e);
+    console.log(e.message);
   }
 
   storage.closeFTP();
