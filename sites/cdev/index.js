@@ -45,10 +45,11 @@ async function run() {
     }
   } catch (e) {
     console.log(e.message);
+  } finally {
+    storage.closeFTP();
+    db.closeDatabase();
   }
 
-  storage.closeFTP();
-  db.closeDatabase();
   
   return Promise.resolve(true);
 }
