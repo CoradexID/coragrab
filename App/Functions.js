@@ -47,7 +47,8 @@ class Functions {
           }`));
 
         }
-      });
+      })
+      .on('error', (err) => console.log(err));
     });
   }
 
