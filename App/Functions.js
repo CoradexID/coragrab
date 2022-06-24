@@ -37,10 +37,7 @@ class Functions {
       client.get(url, (res) => {
         if (res.statusCode === 200) {
           res.pipe(fs.createWriteStream(filepath))
-          .on('error', (e) => {
-            console.log(e);
-            resolve()
-          })
+          .on('error', reject)
           .once('close', () => resolve(filepath));
         } else {
           // Consume response data to free up memory
