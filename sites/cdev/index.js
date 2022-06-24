@@ -42,7 +42,6 @@ async function run() {
           }
         }
     }
-    
   } catch (e) {
     console.log(e.message);
   }
