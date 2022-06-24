@@ -42,13 +42,13 @@ class Functions {
         } else {
           // Consume response data to free up memory
           res.resume();
-          reject(new Error(`Request Failed With a Status Code: $ {
-            res.statusCode
-          }`));
-
+          reject(new Error(`Request Failed With a Status Code: ${res.statusCode}`));
         }
       })
-      .on('error', (err) => console.log(err));
+      .on('error', (err) => {
+        console.log(err);
+        reject(new Error('Error when scrape image'));
+      });
     });
   }
 
