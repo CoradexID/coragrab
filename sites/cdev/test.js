@@ -17,7 +17,7 @@ async function run() {
   }
 
   storage.closeFTP();
-  db.closeDatabase();
+  // db.closeDatabase();
   
   return Promise.resolve(true);
 }
