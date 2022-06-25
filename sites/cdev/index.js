@@ -6,10 +6,13 @@ const scraper = require(process.env.HOME_DIR + 'App/Scraper/' + process.env.MAIN
 
 
 async function run(db, storage) {
+  await storage.connectFTP();
+  const db = new Database(storage);
+  await db.connectDatabase();
+  
   try {
     const feeds = await scraper.getFeed();
-    for (let i = 0; i < feeds.length; i++) {
-      const feed = feeds[i];
+    for (const feed of feeds) {
       console.log(feed);
       // MANGA CHECKER
       const manga = await db.mangaCheck(feed);
@@ -39,28 +42,20 @@ async function run(db, storage) {
         }
       }
       
-      if (i == feeds.length - 1) {
-        return Promise.resolve(true);
-      }
     }
   } catch (e) {
     console.log(e.message);
-    return Promise.resolve(true);
   }
   
+  storage.closeFTP();
+  db.closeDatabase();
   
+  return Promise.resolve(true);
 }
 
 (async () => {
   while (true) {
-    await storage.connectFTP();
-    const db = new Database(storage);
-    await db.connectDatabase();
-    
     await run(db, storage);
-    
-    storage.closeFTP();
-    db.closeDatabase();
     console.log('REST 10 MINUTES');
     await new Promise(resolve => setTimeout(resolve, (60000 * 10)));
   }
