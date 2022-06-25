@@ -8,7 +8,8 @@ const scraper = require(process.env.HOME_DIR + 'App/Scraper/' + process.env.MAIN
 async function run(db, storage) {
   try {
     const feeds = await scraper.getFeed();
-    for (const feed of feeds) {
+    for (let i = 0; i < feeds.length; i++) {
+      const feed = feeds[i];
       console.log(feed);
       // MANGA CHECKER
       const manga = await db.mangaCheck(feed);
@@ -37,13 +38,17 @@ async function run(db, storage) {
           console.log(insertedChapter.post_title);
         }
       }
+      
+      if (i == feeds.length - 1) {
+        return Promise.resolve(true);
+      }
     }
   } catch (e) {
     console.log(e.message);
+    return Promise.resolve(true);
   }
   
   
-  return Promise.resolve(true);
 }
 
 (async () => {
