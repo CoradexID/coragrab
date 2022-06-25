@@ -209,7 +209,7 @@ class Database {
       post_content: content,
       post_title: data.title,
       post_excerpt: '',
-      post_status: 'publish',
+      post_status: 'private',
       comment_status: 'open',
       ping_status: 'open',
       post_password: '',
@@ -236,8 +236,8 @@ class Database {
     
     const createMeta = new Promise(async (resolve, reject) => {
       const metas_data = [
-        [post.insertId, 'oxy_ch', data.chapter],
-        [post.insertId, 'oxy_series', mangaId],
+        [post.insertId, 'ero_chapter', data.chapter],
+        [post.insertId, 'ero_seri', mangaId],
       ]
       
       await query('INSERT INTO wp_postmeta (post_id, meta_key, meta_value) VALUES ?', [metas_data]);
@@ -267,15 +267,15 @@ class Database {
   async PJCheck(data) {
     const slug = data.url.split('/')[4];
 
-    let post = await this.query('SELECT * FROM wp_posts p JOIN wp_postmeta m ON p.ID = m.post_id WHERE post_title = ? AND meta_key = ?', [data.title, 'oxy_project']);
+    let post = await this.query('SELECT * FROM wp_posts p JOIN wp_postmeta m ON p.ID = m.post_id WHERE post_title = ? AND meta_key = ?', [data.title, 'ero_project']);
 
     if (!post[0]) {
-      post = await this.query('SELECT * FROM wp_posts p JOIN wp_postmeta m ON p.ID = m.post_id WHERE post_name = ? AND meta_key = ?', [slug, 'oxy_project']);
-      if (!post[0]) return false;
-      return post[0].meta_value == 'Yes' ? true: false;
+      post = await this.query('SELECT * FROM wp_posts p JOIN wp_postmeta m ON p.ID = m.post_id WHERE post_name = ? AND meta_key = ?', [slug, 'ero_project']);
+      if (!post[0]) return Promise.resolve(false);
+      return Promise.resolve(post[0].meta_value == '1' ? true: false);
     }
 
-    return Promise.resolve(post[0].meta_value == 'Yes' ? true: false);
+    return Promise.resolve(post[0].meta_value == '1' ? true: false);
   }
 
   async mangaCheck(data) {
@@ -284,31 +284,18 @@ class Database {
     let post = await this.query('SELECT * FROM wp_posts WHERE post_title = ?', [data.title]);
 
     // IF DUPLICATE
-    if (post[1]) return {
-      status: 2,
-      message: 'Duplicate'
-    };
+    if (post[1]) return Promise.resolve({ status: 2, message: 'Duplicate' });
 
     // IF PROJECT
     const project = await this.PJCheck(data);
-    if (project) return {
-      status: 3,
-      message: 'Project'
-    };
+    if (project) return Promise.resolve({ status: 3, message: 'Project' });
 
     if (!post[0]) {
       post = await this.query('SELECT * FROM wp_posts WHERE post_name = ?', [slug]);
-      if (!post[0]) return {
-        status: 1,
-        message: 'Not Exist'
-      };
+      if (!post[0]) return Promise.resolve({ status: 1, message: 'Not Exist' });
     }
 
-    return {
-      status: 0,
-      message: 'Exist',
-      data: post[0]
-    };
+    return Promise.resolve({ status: 0, message: 'Exist', data: post[0] });
   }
 
   async chapterCheck(id, data) {
@@ -316,9 +303,9 @@ class Database {
     let posts = await this.query('SELECT post_id FROM wp_postmeta WHERE meta_key = ? AND meta_value = ?', ['oxy_series', id]);
 
     const result_array = posts.map((item) => item.post_id);
-    if (!result_array[0]) return data.chapters;
+    if (!result_array[0]) return Promise.resolve(data.chapters);
     
-    posts = await this.query('SELECT meta_value FROM wp_postmeta WHERE post_id IN (?) AND meta_key = ?', [result_array, 'oxy_ch']);
+    posts = await this.query('SELECT meta_value FROM wp_postmeta WHERE post_id IN (?) AND meta_key = ?', [result_array, 'ero_chapter']);
 
     const chapters = posts.map((item) => item.meta_value);
 
@@ -329,7 +316,7 @@ class Database {
       }
     }
 
-    return results;
+    return Promise.resolve(results);
   }
   
   async uploadImage(imagePath, postParent = 0) {
