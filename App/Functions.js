@@ -19,7 +19,7 @@ class Functions {
     let month = ("0" + (d_t.getMonth() + 1)).slice(-2);
     let day = ("0" + d_t.getDate()).slice(-2);
     let hour = ("0" + d_t.getHours()).slice(-2);
-    let minute = ("0" + d_t.getMinutes()).slice(-2);
+                let minute = ("0" + d_t.getMinutes()).slice(-2);
     let seconds = ("0" + d_t.getSeconds()).slice(-2);
     
     return {
