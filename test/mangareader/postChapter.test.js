@@ -15,6 +15,7 @@ const scraper = require(process.env.HOME_DIR + 'App/Scraper/' + process.env.MAIN
   
   const data = await scraper.getChapter(url);
   data.chapter = '1';
+  data.title = 'So Asik Lo Bangsyat Chapter 1'
   console.log(data);
   const result = await db.insertChapter(mangaId, data);
   console.log(result);
