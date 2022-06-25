@@ -13,14 +13,14 @@ const scraper = require(process.env.HOME_DIR + 'App/Scraper/' + process.env.MAIN
   const url = 'https://kiryuu.id/manga/super-smartphone/';
 
   const data = await scraper.getManga(url);
-  data.title = 'True Friend Stab You In The Front';
+  data.title = 'Holy Drown Queen';
   console.log(data);
   const result = await db.insertManga(data);
   console.log(result);
 
   const chapterData = await scraper.getChapter(data.chapters[0].url);
   chapterData.chapter = '1';
-  chapterData.title = 'True Friend Stab You In The Front Chapter 1';
+  chapterData.title = 'Holy Drown Queen Chapter 1';
   console.log(chapterData);
   const chapterResult = await db.insertChapter(result.ID, chapterData);
   console.log(chapterResult);
