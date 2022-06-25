@@ -271,8 +271,8 @@ class Database {
 
     if (!post[0]) {
       post = await this.query('SELECT * FROM wp_posts p JOIN wp_postmeta m ON p.ID = m.post_id WHERE post_name = ? AND meta_key = ?', [slug, 'oxy_project']);
-      if (!post[0]) return false;
-      return post[0].meta_value == 'Yes' ? true: false;
+      if (!post[0]) return Promise.resolve(false);
+      return Promise.resolve(post[0].meta_value == 'Yes' ? true: false);
     }
 
     return Promise.resolve(post[0].meta_value == 'Yes' ? true: false);
@@ -284,31 +284,31 @@ class Database {
     let post = await this.query('SELECT * FROM wp_posts WHERE post_title = ?', [data.title]);
 
     // IF DUPLICATE
-    if (post[1]) return {
+    if (post[1]) return Promise.resolve({
       status: 2,
       message: 'Duplicate'
-    };
+    });
 
     // IF PROJECT
     const project = await this.PJCheck(data);
-    if (project) return {
+    if (project) return Promise.resolve({
       status: 3,
       message: 'Project'
-    };
+    });
 
     if (!post[0]) {
       post = await this.query('SELECT * FROM wp_posts WHERE post_name = ?', [slug]);
-      if (!post[0]) return {
+      if (!post[0]) return Promise.resolve({
         status: 1,
         message: 'Not Exist'
-      };
+      });
     }
 
-    return {
+    return Promise.resolve({
       status: 0,
       message: 'Exist',
       data: post[0]
-    };
+    });
   }
 
   async chapterCheck(id, data) {
@@ -316,7 +316,7 @@ class Database {
     let posts = await this.query('SELECT post_id FROM wp_postmeta WHERE meta_key = ? AND meta_value = ?', ['oxy_series', id]);
 
     const result_array = posts.map((item) => item.post_id);
-    if (!result_array[0]) return data.chapters;
+    if (!result_array[0]) return Promise.resolve(data.chapters);
     
     posts = await this.query('SELECT meta_value FROM wp_postmeta WHERE post_id IN (?) AND meta_key = ?', [result_array, 'oxy_ch']);
 
@@ -329,7 +329,7 @@ class Database {
       }
     }
 
-    return results;
+    return Promise.resolve(results);
   }
   
   async uploadImage(imagePath, postParent = 0) {
