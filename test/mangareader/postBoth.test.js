@@ -18,7 +18,7 @@ const scraper = require(process.env.HOME_DIR + 'App/Scraper/' + process.env.MAIN
   const result = await db.insertManga(data);
   console.log(result);
 
-  const chapterData = await scraper.getChapter(url);
+  const chapterData = await scraper.getChapter(data.chapters[0].url);
   chapterData.chapter = '1';
   chapterData.title = 'True Friend Stab You In The Front Chapter 1';
   console.log(chapterData);
