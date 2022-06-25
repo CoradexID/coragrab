@@ -22,7 +22,7 @@ const scraper = require(process.env.HOME_DIR + 'App/Scraper/' + process.env.MAIN
   chapterData.chapter = '1';
   chapterData.title = 'True Friend Stab You In The Front Chapter 1';
   console.log(chapterData);
-  const chapterResult = await db.insertChapter(result.ID, data);
+  const chapterResult = await db.insertChapter(result.ID, chapterData);
   console.log(chapterResult);
 
   storage.closeFTP();
