@@ -11,11 +11,12 @@ const scraper = require(process.env.HOME_DIR + 'App/Scraper/' + process.env.MAIN
   await db.connectDatabase();
   
   const url = 'https://kiryuu.id/super-smartphone-chapter-3/';
+  const mangaId = '';
   
   const data = await scraper.getChapter(url);
   data.chapter = '1';
   console.log(data);
-  const result = await db.insertChapter(data);
+  const result = await db.insertChapter(mangaId, data);
   console.log(result);
   
   storage.closeFTP();
