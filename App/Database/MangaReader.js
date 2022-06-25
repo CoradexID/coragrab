@@ -114,6 +114,8 @@ class Database {
           [post.insertId, 'ero_project', '0'],
           [post.insertId, 'ero_hot', '0'],
           [post.insertId, 'ero_slider', '0'],
+          [post.insertId, 'wp_discord_mention_flag', 'no'],
+          [post.insertId, 'wp_discord_send_flag', 'yes'],
         ]
         
         await query('INSERT INTO wp_postmeta (post_id, meta_key, meta_value) VALUES ?', [metas_data]);
