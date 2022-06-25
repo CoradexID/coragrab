@@ -14,8 +14,8 @@ const scraper = require(process.env.HOME_DIR + 'App/Scraper/' + process.env.MAIN
   const mangaId = '595608';
   
   const data = await scraper.getChapter(url);
-  data.chapter = '1';
-  data.title = 'So Asik Lo Bangsyat Chapter 1';
+  data.chapter = '2';
+  data.title = 'True Friend Stab You In The Front Chapter 2';
   console.log(data);
   const result = await db.insertChapter(mangaId, data);
   console.log(result);
