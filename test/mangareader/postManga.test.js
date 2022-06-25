@@ -10,7 +10,10 @@ const scraper = require(process.env.HOME_DIR + 'App/Scraper/' + process.env.MAIN
   const db = new Database(storage);
   await db.connectDatabase();
   
+  const url = 'https://kiryuu.id/manga/super-smartphone/';
+  
   const data = await scraper.getManga(url);
+  data.title = 'Sok Asik Lo Bangsyat';
   console.log(data);
   const result = await db.insertManga(data);
   console.log(result);
