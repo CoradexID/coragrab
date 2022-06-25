@@ -5,7 +5,7 @@ const Database = require(process.env.HOME_DIR + 'App/Database/' + process.env.MA
 const scraper = require(process.env.HOME_DIR + 'App/Scraper/' + process.env.MAIN_TARGET + '.js');
 
 
-async function run() {
+async function run(db, storage) {
   try {
     const feeds = await scraper.getFeed();
     for (const feed of feeds) {
@@ -52,7 +52,7 @@ async function run() {
     const db = new Database(storage);
     await db.connectDatabase();
     
-    await run();
+    await run(db, storage);
     
     storage.closeFTP();
     db.closeDatabase();
