@@ -7,7 +7,7 @@ const functions = require('../Functions.js');
 
 class Database {
 
-  constructor(storage) {
+  constructor(storage = null) {
     this.connection = mysql.createConnection({
       host: process.env.DB_HOST,
       port: process.env.DB_PORT,
