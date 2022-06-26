@@ -254,7 +254,12 @@ class Database {
           permalink: item.post_name,
           time: functions.dateToSeconds(item.post_modified)
         }
-      })
+      });
+      
+      const latest = {
+        post_id: mangaId,
+        meta_key: 
+      }
       
       resolve(true);
     }); 
