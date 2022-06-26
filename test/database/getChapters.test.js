@@ -10,6 +10,7 @@ async function run(db) {
   await db.connectDatabase();
   
   const chapters = await db.getChapters('586641');
+  console.log(chapters);
   
   db.closeDatabase();
   
