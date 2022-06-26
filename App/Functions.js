@@ -1,6 +1,7 @@
 require('dotenv').config();
 const fs = require('fs');
 const client = require('https');
+const serializer = require('php-serialize');
 
 class Functions {
 
@@ -53,6 +54,10 @@ class Functions {
   dateToSeconds(date) {
     const data = new Date(date);
     return Math.floor(data.getTime() / 1000);
+  }
+  
+  serialize(obj) {
+    return serializer.serialize(obj);
   }
 
 }
