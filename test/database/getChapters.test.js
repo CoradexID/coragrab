@@ -1,3 +1,4 @@
+require('dotenv').config();
 const Database = require(process.env.HOME_DIR + 'App/Database/' + process.env.MAIN_THEME + '.js');
 
 
