@@ -245,6 +245,17 @@ class Database {
       ]
       
       await query('INSERT INTO wp_postmeta (post_id, meta_key, meta_value) VALUES ?', [metas_data]);
+      
+      const chapters = await this.getChapters(mangaId, 3);
+      const last_chapters = chapters.map((item) => {
+        return {
+          id: item.ID,
+          chapter: item.meta_value,
+          permalink: item.post_name,
+          time: functions.dateToSeconds(item.post_modified)
+        }
+      })
+      
       resolve(true);
     }); 
     
