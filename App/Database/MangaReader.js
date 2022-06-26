@@ -257,13 +257,20 @@ class Database {
         }
       });
       
-      const latest = {
+      const latest_data = {
         post_id: mangaId,
         meta_key: 'ero_latest',
         meta_value: functions.serialize(last_chapters)
       }
       
-      await query('INSERT INTO wp_postmeta SET ?', [latest]);
+      const latest = await query('SELECT * FROM wp_postmeta WHERE post_id = ? AND meta_key = ?', [mangaId, 'ero_latest']);
+      if (!latest[0]) {
+        await query('INSERT INTO wp_postmeta SET ?', [latest_data]);
+      } else {
+        await query('UPDATE wp_postmeta SET meta_value = ? WHERE meta_id = ?', [latest_data.meta_value, latest[0].meta_id])
+      }
+      
+      
       ////////////////////////
       
       resolve(true);
