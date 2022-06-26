@@ -16,6 +16,8 @@
     "fs-extra": "^10.1.0",
     "ftp": "^0.3.10",
     "https": "^1.0.0",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "node-serialize": "^0.0.4",
+    "php-serialize": "^4.0.2"
   }
 }

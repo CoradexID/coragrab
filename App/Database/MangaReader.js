@@ -304,7 +304,7 @@ class Database {
 
   async chapterCheck(id, data) {
 
-    let posts = await this.query('SELECT post_id FROM wp_postmeta WHERE meta_key = ? AND meta_value = ?', ['oxy_series', id]);
+    let posts = await this.query('SELECT post_id FROM wp_postmeta WHERE meta_key = ? AND meta_value = ?', ['ero_seri', id]);
 
     const result_array = posts.map((item) => item.post_id);
     if (!result_array[0]) return Promise.resolve(data.chapters);
@@ -368,6 +368,10 @@ class Database {
     const meta_data = {post_id, meta_key: '_thumbnail_id', meta_value: image_id}
     await this.query('INSERT INTO wp_postmeta SET ?', [meta_data])
     return Promise.resolve(true);
+  }
+  
+  async getChapters(mangaId, limit = 0) {
+    let posts = await this.query('SELECT post_id FROM wp_postmeta WHERE meta_key = ? AND meta_value = ?' + limit != 0 ? ' LIMIT ' + limit : '', ['ero_seri', id]);
   }
 
 }

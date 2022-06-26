@@ -12,23 +12,6 @@ class Functions {
     .replace(/[\s_-]+/g, '-')
     .replace(/^-+|-+$/g, '');
   }
-  
-  getTime() {
-    const d_t = new Date();
-    let year = d_t.getFullYear();
-    let month = ("0" + (d_t.getMonth() + 1)).slice(-2);
-    let day = ("0" + d_t.getDate()).slice(-2);
-    let hour = ("0" + d_t.getHours()).slice(-2);
-    let minute = ("0" + d_t.getMinutes()).slice(-2);
-    let seconds = ("0" + d_t.getSeconds()).slice(-2);
-    
-    return { year, month, day, hour, minute, seconds  }
-  }
-  
-  getTimestamps() {
-    const time = this.getTime();
-    return time.year + "-" + time.month + "-" + time.day + " " + time.hour + ":" + time.minute + ":" + time.seconds;
-  }
 
   downloadImage(url, filepath) {
     return new Promise((resolve, reject) => {
@@ -48,6 +31,28 @@ class Functions {
         reject(new Error('Error when scrape image'));
       });
     });
+  }
+  
+  getTime() {
+    const d_t = new Date();
+    let year = d_t.getFullYear();
+    let month = ("0" + (d_t.getMonth() + 1)).slice(-2);
+    let day = ("0" + d_t.getDate()).slice(-2);
+    let hour = ("0" + d_t.getHours()).slice(-2);
+    let minute = ("0" + d_t.getMinutes()).slice(-2);
+    let seconds = ("0" + d_t.getSeconds()).slice(-2);
+    
+    return { year, month, day, hour, minute, seconds  }
+  }
+  
+  getTimestamps() {
+    const time = this.getTime();
+    return time.year + "-" + time.month + "-" + time.day + " " + time.hour + ":" + time.minute + ":" + time.seconds;
+  }
+  
+  dateToSeconds(date) {
+    const data = new Date(date);
+    return Math.floor(data.getTime() / 1000);
   }
 
 }
