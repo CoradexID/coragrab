@@ -306,8 +306,8 @@ class Database {
 
     let posts = await this.query('SELECT post_id FROM wp_postmeta WHERE meta_key = ? AND meta_value = ?', ['ero_seri', id]);
 
+    if (!posts[0]) return Promise.resolve(data.chapters);
     const result_array = posts.map((item) => item.post_id);
-    if (!result_array[0]) return Promise.resolve(data.chapters);
     
     posts = await this.query('SELECT meta_value FROM wp_postmeta WHERE post_id IN (?) AND meta_key = ?', [result_array, 'ero_chapter']);
 
@@ -377,6 +377,10 @@ class Database {
     } else {
       posts = await this.query('SELECT * FROM wp_posts p JOIN wp_postmeta m ON p.ID = m.post_id WHERE meta_key = ? OR meta_value = ? LIMIT ?', ['ero_chapter', mangaId, limit]);
     }
+    if (!posts[0]) return Promise.resolve([]);
+    const result_array = posts.map((item) => item.post_id);
+    
+    let chapters = await this.query('SELECT meta_value FROM wp_postmeta WHERE post_id IN (?) AND meta_key = ?', [result_array, 'ero_chapter']);
     
     return Promise.resolve(posts);
   }
