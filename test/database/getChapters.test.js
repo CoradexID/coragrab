@@ -6,7 +6,7 @@ async function run() {
   const db = new Database();
   await db.connectDatabase();
   
-  const chapters = await db.getChapters('586641');
+  const chapters = await db.getChapters('586641', 3);
   console.log(chapters);
   
   db.closeDatabase();
