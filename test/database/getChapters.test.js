@@ -5,7 +5,7 @@ const Database = require(process.env.HOME_DIR + 'App/Database/' + process.env.MA
 const scraper = require(process.env.HOME_DIR + 'App/Scraper/' + process.env.MAIN_TARGET + '.js');
 
 
-async function run(db) {
+async function run() {
   const db = new Database();
   await db.connectDatabase();
   
@@ -18,5 +18,5 @@ async function run(db) {
 }
 
 (async () => {
-  await run(db);
+  await run();
 })();
