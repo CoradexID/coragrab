@@ -373,16 +373,17 @@ class Database {
   async getChapters(mangaId, limit = null) {
     let posts = '';
     if (limit == null) {
-      posts = await this.query('SELECT * FROM wp_posts p JOIN wp_postmeta m ON p.ID = m.post_id WHERE meta_key = ? AND meta_value = ?', ['ero_chapter', mangaId]);
+      posts = await this.query('SELECT * FROM wp_posts p JOIN wp_postmeta m ON p.ID = m.post_id WHERE meta_key = ? AND meta_value = ?', ['ero_seri', mangaId]);
     } else {
-      posts = await this.query('SELECT * FROM wp_posts p JOIN wp_postmeta m ON p.ID = m.post_id WHERE meta_key = ? OR meta_value = ? LIMIT ?', ['ero_chapter', mangaId, limit]);
+      posts = await this.query('SELECT * FROM wp_posts p JOIN wp_postmeta m ON p.ID = m.post_id WHERE meta_key = ? AND meta_value = ? LIMIT ?', ['ero_seri', mangaId, limit]);
     }
     if (!posts[0]) return Promise.resolve([]);
     const result_array = posts.map((item) => item.post_id);
     
-    let chapters = await this.query('SELECT meta_value FROM wp_postmeta WHERE post_id IN (?) AND meta_key = ?', [result_array, 'ero_chapter']);
+    const chapters = await this.query('SELECT * FROM wp_posts p JOIN wp_postmeta m ON p.ID = m.post_id WHERE post_id IN (?) AND meta_key = ?', [mangaId, 'ero_chapter']);
     
-    return Promise.resolve(posts);
+    
+    return Promise.resolve(chapters);
   }
 
 }
