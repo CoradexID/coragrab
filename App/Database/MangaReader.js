@@ -371,10 +371,11 @@ class Database {
   }
   
   async getChapters(mangaId, limit = null) {
+    let posts = '';
     if (limit == null) {
-      const posts = await this.query('SELECT * FROM wp_posts p JOIN wp_postmeta m ON p.ID = m.post_id WHERE meta_key = ? AND meta_value = ?', ['ero_seri', mangaId]);
+      posts = await this.query('SELECT * FROM wp_posts p JOIN wp_postmeta m ON p.ID = m.post_id WHERE meta_key = ? AND meta_value = ?', ['ero_seri', mangaId]);
     } else {
-      const posts = await this.query('SELECT * FROM wp_posts p JOIN wp_postmeta m ON p.ID = m.post_id WHERE meta_key = ? AND meta_value = ? LIMIT ?', ['ero_seri', mangaId, limit]);
+      posts = await this.query('SELECT * FROM wp_posts p JOIN wp_postmeta m ON p.ID = m.post_id WHERE meta_key = ? AND meta_value = ? LIMIT ?', ['ero_seri', mangaId, limit]);
     }
     
     return Promise.resolve(posts);
