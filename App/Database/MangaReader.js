@@ -375,7 +375,7 @@ class Database {
     if (limit == null) {
       posts = await this.query('SELECT * FROM wp_posts p JOIN wp_postmeta m ON p.ID = m.post_id WHERE meta_key = ? AND meta_value = ?', ['ero_chapter', mangaId]);
     } else {
-      posts = await this.query('SELECT * FROM wp_posts p JOIN wp_postmeta m ON p.ID = m.post_id WHERE meta_key = ? AND meta_value = ? LIMIT ?', ['ero_chapter', mangaId, limit]);
+      posts = await this.query('SELECT * FROM wp_posts p JOIN wp_postmeta m ON p.ID = m.post_id WHERE meta_key = ? OR meta_value = ? LIMIT ?', ['ero_chapter', mangaId, limit]);
     }
     
     return Promise.resolve(posts);
