@@ -20,7 +20,7 @@ const scraper = require(process.env.HOME_DIR + 'App/Scraper/' + process.env.MAIN
 
   const chapterData = await scraper.getChapter(data.chapters[0].url);
   chapterData.chapter = '1';
-  chapterData.title = 'Holy Drown Queen Chapter 1';
+  chapterData.title = data.title + ' Chapter ' + chapterData.chapter;
   console.log(chapterData);
   const chapterResult = await db.insertChapter(result.ID, chapterData);
   console.log(chapterResult);
