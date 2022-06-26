@@ -269,8 +269,6 @@ class Database {
       } else {
         await query('UPDATE wp_postmeta SET meta_value = ? WHERE meta_id = ?', [latest_data.meta_value, latest[0].meta_id])
       }
-      
-      
       ////////////////////////
       
       resolve(true);
