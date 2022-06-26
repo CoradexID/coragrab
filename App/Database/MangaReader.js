@@ -370,8 +370,8 @@ class Database {
     return Promise.resolve(true);
   }
   
-  async getChapters(mangaId, limit = 0) {
-    let posts = await this.query('SELECT * FROM wp_posts p JOIN wp_postmeta m ON p.ID = m.post_id WHERE meta_key = ? AND meta_value = ?' + limit != 0 ? ' LIMIT ' + limit : '', ['ero_seri', mangaId]);
+  async getChapters(mangaId, limit = null) {
+    let posts = await this.query('SELECT * FROM wp_posts p JOIN wp_postmeta m ON p.ID = m.post_id WHERE meta_key = ? AND meta_value = ?' + limit != null ? ' LIMIT ' + limit : '', ['ero_seri', mangaId]);
     return Promise.resolve(posts);
   }
 
