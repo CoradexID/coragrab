@@ -246,6 +246,7 @@ class Database {
       
       await query('INSERT INTO wp_postmeta (post_id, meta_key, meta_value) VALUES ?', [metas_data]);
       
+      // ONLY MANGAREADER
       const chapters = await this.getChapters(mangaId, 3);
       const last_chapters = chapters.map((item) => {
         return {
@@ -258,8 +259,12 @@ class Database {
       
       const latest = {
         post_id: mangaId,
-        meta_key: 
+        meta_key: 'ero_latest',
+        meta_value: functions.serialize(last_chapters)
       }
+      
+      await query('INSERT INTO wp_postmeta SET ?', [latest]);
+      ////////////////////////
       
       resolve(true);
     }); 
