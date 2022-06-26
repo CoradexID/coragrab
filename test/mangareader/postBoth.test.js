@@ -10,10 +10,10 @@ const scraper = require(process.env.HOME_DIR + 'App/Scraper/' + process.env.MAIN
   const db = new Database(storage);
   await db.connectDatabase();
 
-  const url = 'https://kiryuu.id/manga/super-smartphone/';
+  const url = 'https://kiryuu.id/manga/a-cute-guy/';
 
   const data = await scraper.getManga(url);
-  data.title = 'Holy Drown Queen';
+  data.title = 'Holy Moly Queen';
   console.log(data);
   const result = await db.insertManga(data);
   console.log(result);
