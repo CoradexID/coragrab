@@ -380,7 +380,7 @@ class Database {
     if (!posts[0]) return Promise.resolve([]);
     const result_array = posts.map((item) => item.post_id);
     
-    const chapters = await this.query('SELECT * FROM wp_posts p JOIN wp_postmeta m ON p.ID = m.post_id WHERE post_id IN (?) AND meta_key = ?', [mangaId, 'ero_chapter']);
+    const chapters = await this.query('SELECT * FROM wp_posts p JOIN wp_postmeta m ON p.ID = m.post_id WHERE post_id IN (?) AND meta_key = ?', [result_array, 'ero_chapter']);
     
     
     return Promise.resolve(chapters);
