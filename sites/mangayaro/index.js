@@ -12,6 +12,8 @@ async function run() {
   
   try {
     const feeds = await scraper.getFeed();
+    feeds.pop();
+    
     for (const feed of feeds) {
       console.log(feed);
       // MANGA CHECKER
@@ -48,7 +50,7 @@ async function run() {
   }
   
   storage.closeFTP();
-  db.closeDatabase();
+  await db.closeDatabase();
   
   
   return Promise.resolve(true);
