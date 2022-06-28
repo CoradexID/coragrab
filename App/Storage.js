@@ -23,6 +23,7 @@ class Storage {
       user: process.env.STORAGE_FTP_USER,
       password: process.env.STORAGE_FTP_PASS,
     });
+    
     this.wp.ftp.verbose = true;
     return Promise.resolve(true);
   }
