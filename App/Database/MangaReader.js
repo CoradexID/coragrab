@@ -62,6 +62,7 @@ class Database {
   }
   
   async insertManga(data, setFeaturedImage = true) {
+    await this.wp.checkConnection();
     // DECLARING VARIABLES
     const query = this.query;
     const nowtime = functions.getTimestamps();
@@ -204,6 +205,7 @@ class Database {
   }
 
   async insertChapter(mangaId, data, uploadContent = true) {
+    await this.storage.checkConnection();
     // DECLARING VARIABLES
     const query = this.query;
     const nowtime = functions.getTimestamps();
