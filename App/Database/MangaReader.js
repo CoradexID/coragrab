@@ -226,7 +226,7 @@ class Database {
       contents = contents.join('');
       content = contents;
       
-      await this.storage.uploadToStorage(data.contentPath, destination);
+      await this.storage.uploadMultiple(data.contentPath, destination);
     }
 
     // INSERT TO wp_posts
@@ -382,7 +382,7 @@ class Database {
     const filename = 'i' + time.day + time.hour + time.minute + time.seconds;
     const path = time.year + '/' + time.month + '/' + filename + '.jpg';
     const filepath = path;
-    await this.storage.uploadToWP(imagePath, filepath);
+    await this.wp.uploadSingle(imagePath, filepath);
     
     const post_data = {
       post_author: process.env.WP_AUTHOR_ID,
