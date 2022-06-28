@@ -31,6 +31,15 @@ class Storage {
   
   closeFTP() {
     this.client.close();
+    
+    return new Promise((resolve) => {
+      const wait = setInterval(() => {
+        if (this.client.closed) {
+          resolve(true);
+          clearInterval(wait);
+        }
+      }, 100)
+    });
   }
 
   async uploadSingle(imagePath, path) {
