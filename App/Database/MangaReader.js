@@ -5,7 +5,7 @@ const util = require('util');
 const fs = require('fs-extra');
 
 const functions = require('../Functions.js');
-const storage = require('../Storage.js');
+const Storage = require('../Storage.js');
 
 class Database {
 
