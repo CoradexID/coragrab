@@ -19,13 +19,6 @@ class Storage {
     });
     
     return Promise.resolve(true);
-    
-    // await this.client.access({
-    //   host: process.env.WP_FTP_HOST,
-    //   port: process.env.WP_FTP_PORT,
-    //   user: process.env.WP_FTP_USER,
-    //   password: process.env.WP_FTP_PASS,
-    // });
   }
   
   async checkConnection() {
