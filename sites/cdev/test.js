@@ -12,7 +12,6 @@ async function run() {
 
   try {
     const feeds = await scraper.getFeed();
-
     for (var i = 0; i < feeds.length; i++) {
       if (i == feeds.length - 1) {
         const feed = feeds[i];
