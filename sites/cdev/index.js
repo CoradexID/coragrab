@@ -12,6 +12,7 @@ async function run() {
   
   try {
     const feeds = await scraper.getFeed();
+    
     for (const feed of feeds) {
       console.log(feed);
       // MANGA CHECKER
