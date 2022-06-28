@@ -3,11 +3,13 @@ process.env.TZ = 'Etc/Universal';
 const mysql = require('mysql');
 const util = require('util');
 const fs = require('fs-extra');
+
 const functions = require('../Functions.js');
+const storage = require('../Storage.js');
 
 class Database {
 
-  constructor(storage = null) {
+  constructor() {
     this.connection = mysql.createConnection({
       host: process.env.DB_HOST,
       port: process.env.DB_PORT,
@@ -16,7 +18,19 @@ class Database {
       database: process.env.DB_NAME
     });
     this.query = util.promisify(this.connection.query).bind(this.connection);
-    this.storage = storage;
+    
+    this.wp = new Storage({
+      host: process.env.WP_FTP_HOST,
+      port: process.env.WP_FTP_PORT,
+      user: process.env.WP_FTP_USER,
+      password: process.env.WP_FTP_PASS,
+    });
+    this.storage = new Storage({
+      host: process.env.STORAGE_FTP_HOST,
+      port: process.env.STORAGE_FTP_PORT,
+      user: process.env.STORAGE_FTP_USER,
+      password: process.env.STORAGE_FTP_PASS,
+    });
   }
   
   connectDatabase() {
