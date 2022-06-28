@@ -24,7 +24,7 @@ class Storage {
   async checkConnection() {
     if (this.client.closed) {
       await this.connectFTP();
-      return Promise.Resolve('Closed & Successfully Reconnected');
+      return Promise.resolve('Closed & Successfully Reconnected');
     }
     return Promise.resolve('Not Closed');
   }
