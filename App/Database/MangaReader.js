@@ -40,7 +40,7 @@ class Database {
   }
   
   async closeStorage() {
-    await this.wp.closetFTP();
+    await this.wp.closeFTP();
     await this.storage.closeFTP();
     return Promise.resolve(true);
   }
