@@ -1,14 +1,14 @@
 require('dotenv').config();
-const functions = require(process.env.HOME_DIR + 'App/Functions.js');
-const storage = require(process.env.HOME_DIR + 'App/Storage.js');
+
 const Database = require(process.env.HOME_DIR + 'App/Database/' + process.env.MAIN_THEME + '.js');
 const scraper = require(process.env.HOME_DIR + 'App/Scraper/' + process.env.MAIN_TARGET + '.js');
 
 
 async function run() {
-  await storage.connectFTP();
-  const db = new Database(storage);
+  const db = new Database();
+  
   await db.connectDatabase();
+  await db.connectStorage();
 
   try {
     const feeds = await scraper.getFeed();
@@ -53,10 +53,9 @@ async function run() {
   } catch (e) {
     console.log(e.message);
   }
-
-  storage.closeFTP();
+  
   await db.closeDatabase();
-
+  await db.closeStorage();
 
   return Promise.resolve(true);
 }
