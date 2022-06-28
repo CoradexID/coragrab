@@ -33,7 +33,19 @@ class Database {
     });
   }
   
-  connectDatabase() {
+  async connectStorage() {
+    await this.wp.connectFTP();
+    await this.storage.connectFTP();
+    return Promise.resolve(true);
+  }
+  
+  async closeStorage() {
+    await this.wp.connectFTP();
+    await this.storage.connectFTP();
+    return Promise.resolve(true);
+  }
+    
+  async connectDatabase() {
     return new Promise((resolve, reject) => {
       this.connection.connect((err) => {
         err ? reject(err) : resolve(true);
