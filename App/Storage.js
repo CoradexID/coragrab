@@ -5,18 +5,17 @@ const functions = require('./Functions.js');
 
 class Storage {
 
-  constructor() {
-    this.wp = new ftp.Client();
-    this.storage = new ftp.Client();
+  constructor(options) {
+    this.client = new ftp.Client();
+    this.options = options;
+    
+    this.host = this.options.host;
+    this.user = this.options.user;
+    this.password = this.options.password;
+    this.port = this.options.port;
   }
 
   async connectFTP() {
-    await this.wp.access({
-      host: process.env.WP_FTP_HOST,
-      port: process.env.WP_FTP_PORT,
-      user: process.env.WP_FTP_USER,
-      password: process.env.WP_FTP_PASS,
-    });
     await this.storage.access({
       host: process.env.STORAGE_FTP_HOST,
       port: process.env.STORAGE_FTP_PORT,
@@ -26,6 +25,13 @@ class Storage {
     
     this.wp.ftp.verbose = true;
     return Promise.resolve(true);
+    
+    // await this.wp.access({
+    //   host: process.env.WP_FTP_HOST,
+    //   port: process.env.WP_FTP_PORT,
+    //   user: process.env.WP_FTP_USER,
+    //   password: process.env.WP_FTP_PASS,
+    // });
   }
   
   closeFTP() {
