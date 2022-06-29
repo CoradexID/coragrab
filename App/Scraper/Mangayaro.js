@@ -98,7 +98,7 @@ class Scraper {
       let content = '';
       const sources = [];
       const images = $('#readerarea img');
-      console.log(images.text());
+      console.log(images);
       images.each(function(v, i) {
         const src = $(this).attr('src');
         console.log(src);
