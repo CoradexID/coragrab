@@ -16,20 +16,18 @@ async function run() {
       console.log(feed);
       // MANGA CHECKER
       const manga = await db.mangaCheck(feed);
-      console.log(manga);
+      console.log(manga.status, manga.message);
 
       if (manga.status == 1) {
-        console.log('Getting Manga Data');
         const mangaData = await scraper.getManga(feed.url);
         mangaData.title = feed.title;
-        console.log('Posting Manga');
+        console.log('Posting Manga', mangaData.title);
         const insertedManga = await db.insertManga(mangaData);
         console.log(insertedManga.post_title);
         for (const chapter of mangaData.chapters) {
-          console.log('Getting Chapter Data');
           const chapterData = await scraper.getChapter(chapter.url);
           chapterData.chapter = chapter.chapter;
-          console.log('Posting Chapter');
+          console.log('Posting Chapter', chapterData.chapter);
           const insertedChapter = await db.insertChapter(insertedManga.ID, chapterData);
           console.log(insertedChapter.post_title);
         }
@@ -38,9 +36,11 @@ async function run() {
       if (manga.status == 0) {
         const mangaData = await scraper.getManga(feed.url);
         const chapters = await db.chapterCheck(manga.data.ID, mangaData);
+        console.log(chapters.length, 'Chapter Not Exist');
         for (const chapter of chapters) {
           const chapterData = await scraper.getChapter(chapter.url);
           chapterData.chapter = chapter.chapter;
+          console.log('Posting Chapter', chapterData.chapter);
           const insertedChapter = await db.insertChapter(manga.data.ID, chapterData);
           console.log(insertedChapter.post_title);
         }
