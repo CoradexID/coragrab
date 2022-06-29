@@ -97,9 +97,10 @@ class Scraper {
 
       let content = '';
       const sources = [];
-      const images = $('#readerar img');
+      const images = $('#readerarea img');
       images.each(function(v, i) {
         const src = $(this).attr('src');
+        console.log(src);
         sources.push(src);
         content = content + '<img src="' + src + '"/>';
       });
