@@ -26,6 +26,7 @@ class Storage {
       await this.connectFTP();
       return Promise.resolve('Closed & Successfully Reconnected');
     }
+    console.log('Storage Connection Status:', this.client.closed);
     return Promise.resolve('Not Closed');
   }
   
