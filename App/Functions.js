@@ -15,7 +15,8 @@ class Functions {
   }
 
   downloadImage(url, filepath) {
-    console.log(url, filepath);
+    console.log(url);
+    console.log(filepath);
     return new Promise((resolve, reject) => {
       client.get(url, (res) => {
         console.log(res);
