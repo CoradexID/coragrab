@@ -14,9 +14,9 @@ class Functions {
     .replace(/^-+|-+$/g, '');
   }
 
-  downloadImage(url, {rejectUnaithorized: false}, filepath) {
+  downloadImage(url, filepath) {
     return new Promise((resolve, reject) => {
-      client.get(url, (res) => {
+      client.get(url, {rejectUnaithorized: false}, (res) => {
         if (res.statusCode === 200) {
           res.pipe(fs.createWriteStream(filepath))
           .on('error', (err) => reject(new Error('error when save image')))
