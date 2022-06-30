@@ -149,7 +149,7 @@ class Scraper {
       // const $ = cheerio.load(html);
       
       const dom = new JSDOM(html).window.document;
-      const upd = dom.querySelectorAll('.listupd')[1];
+      const upd = dom.querySelectorAll('.listupd')[2];
       const manga = upd.querySelectorAll('.utao .imgu a.series');
       const results = [];
       for (var i = 0; i < manga.length; i++) {
