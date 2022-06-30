@@ -16,9 +16,12 @@ class Scraper {
 
     const title = $('.entry-title').text();
     const sinopsys = $('div[itemprop="description"] p').text();
-    const cover = $('.thumb img').attr('src');
+    let cover = $('.thumb img').attr('src');
     let coverPath = null;
     if (downloadCover) {
+      // ONLY MANGAYARO
+      cover = cover.replace('cache.', '');
+      
       const time = functions.getTime();
       const filename = time.day + time.hour + time.minute + time.seconds + ".jpg";
       const filepath = process.env.DOWNLOAD_LOCAL_PATH + filename;
