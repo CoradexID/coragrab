@@ -2,7 +2,7 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 const fs = require('fs-extra');
 const functions = require('../Functions.js');
-const JSDOM = require('jsdom');
+const {JSDOM} = require('jsdom');
 require('dotenv').config();
 
 const MAIN_URL = 'https://mangayaro.com/';
