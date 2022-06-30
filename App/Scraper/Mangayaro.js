@@ -145,6 +145,7 @@ class Scraper {
   getFeed() {
     return axios.get(MAIN_URL).then((res) => {
       const html = res.data;
+      
       const $ = cheerio.load(html);
 
       const upd = $('.listupd');
@@ -152,7 +153,7 @@ class Scraper {
       const results = [];
       upd.each(function(v, i) {
         if (v == 2) {
-          const manga = $(this).find('a.series');
+          const manga = $(this).find('.utao .imgu a.series');
           manga.each(function(v, i) {
             const title = $(this).attr('title');
             const url = $(this).attr('href');
