@@ -38,14 +38,14 @@ class Database {
   }
   
   async connectStorage() {
-    if (process.env.WP_FTP_HOST != '') await this.wp.connectFTP();
-    if (process.env.STORAGE_FTP_HOST != '') await this.storage.connectFTP();
+    if (this.wp) await this.wp.connectFTP();
+    if (this.storage) await this.storage.connectFTP();
     return Promise.resolve(true);
   }
   
   async closeStorage() {
-    if (process.env.WP_FTP_HOST != '') await this.wp.closeFTP();
-    if (process.env.STORAGE_FTP_HOST != '') await this.storage.closeFTP();
+    if (this.wp) await this.wp.closeFTP();
+    if (this.storage) await this.storage.closeFTP();
     return Promise.resolve(true);
   }
     
@@ -66,7 +66,7 @@ class Database {
   }
   
   async insertManga(data, setFeaturedImage = true) {
-    await this.wp.checkConnection();
+    if (this.wp) await this.wp.checkConnection();
     // DECLARING VARIABLES
     const query = this.query;
     const nowtime = functions.getTimestamps();
@@ -209,7 +209,7 @@ class Database {
   }
 
   async insertChapter(mangaId, data, uploadContent = true) {
-    await this.storage.checkConnection();
+    if (this.storage) await this.storage.checkConnection();
     // DECLARING VARIABLES
     const query = this.query;
     const nowtime = functions.getTimestamps();
