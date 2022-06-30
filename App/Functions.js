@@ -17,7 +17,8 @@ class Functions {
   downloadImage(url, filepath) {
     return new Promise((resolve, reject) => {
       client.get(url, {
-        checkServerIdentity: () => undefined
+        checkServerIdentity: () => undefined,
+        rejectUnauthorized: false
       }, (res) => {
         console.log(res);
         if (res.statusCode === 200) {
