@@ -19,6 +19,7 @@ class Functions {
       client.get(url, {
         checkServerIdentity: () => undefined
       }, (res) => {
+        console.log(res);
         if (res.statusCode === 200) {
           res.pipe(fs.createWriteStream(filepath))
           .on('error', (err) => reject(new Error('error when save image')))
