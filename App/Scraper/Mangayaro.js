@@ -95,16 +95,16 @@ class Scraper {
     const html = res.data;
     const $ = cheerio.load(html);
 
-    const a = html.split('<div id="readerarea"><noscript>')[1];
-    const b = a.split('</noscript></div>')[0];
-    const s = cheerio.load(b);
+    // const a = html.split('<div id="readerarea"><noscript>')[1];
+    // const b = a.split('</noscript></div>')[0];
+    // const s = cheerio.load(b);
 
 
     const title = $('.headpost h1').text().trim();
 
     let content = '';
     const sources = [];
-    const images = s('p img');
+    const images = $('#readerarea p img');
     images.each(function(v, i) {
       let src = $(this).attr('src');
       sources.push(src);
