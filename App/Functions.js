@@ -14,7 +14,7 @@ class Functions {
     .replace(/^-+|-+$/g, '');
   }
 
-  downloadImage(url, filepath) {
+  downloadImage(url, {rejectUnaithorized: false}, filepath) {
     return new Promise((resolve, reject) => {
       client.get(url, (res) => {
         if (res.statusCode === 200) {
