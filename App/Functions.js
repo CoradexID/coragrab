@@ -16,10 +16,7 @@ class Functions {
 
   downloadImage(url, filepath) {
     return new Promise((resolve, reject) => {
-      client.get(url, {
-        checkServerIdentity: () => undefined,
-        rejectUnauthorized: false
-      }, (res) => {
+      client.get(url, (res) => {
         console.log(res);
         if (res.statusCode === 200) {
           res.pipe(fs.createWriteStream(filepath))
