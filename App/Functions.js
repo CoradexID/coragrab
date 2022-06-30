@@ -59,6 +59,12 @@ class Functions {
   serialize(obj) {
     return serializer.serialize(obj);
   }
+  
+  replaceDomain(url, domain) {
+    const result = url.split('/');
+    result[2] = domain;
+    return result.join('/');
+  }
 
 }
 

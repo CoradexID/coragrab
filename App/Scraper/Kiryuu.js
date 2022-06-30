@@ -82,7 +82,7 @@ class Scraper {
     
   }
 
-  async getChapter(url, downloadContent = true) {
+  async getChapter(url, downloadContent = true, options = {}) {
     fs.emptyDirSync(process.env.DOWNLOAD_LOCAL_PATH);
     const res = await axios.get(url);
       const html = res.data;
@@ -99,8 +99,11 @@ class Scraper {
       const sources = [];
       const images = s('p img');
       images.each(function(v, i) {
-        const src = $(this).attr('src');
+        let src = $(this).attr('src');
         sources.push(src);
+        if (options.replaceImageDomain) {
+          src = functions.replaceDomain(src, options.replaceImageDomain);
+        }
         content = content + '<img src="' + src + '"/>';
       });
       

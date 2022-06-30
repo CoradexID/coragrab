@@ -19,29 +19,33 @@ class Database {
     });
     this.query = util.promisify(this.connection.query).bind(this.connection);
     
-    this.wp = new Storage({
-      host: process.env.WP_FTP_HOST,
-      port: process.env.WP_FTP_PORT,
-      user: process.env.WP_FTP_USER,
-      password: process.env.WP_FTP_PASS,
-    });
-    this.storage = new Storage({
-      host: process.env.STORAGE_FTP_HOST,
-      port: process.env.STORAGE_FTP_PORT,
-      user: process.env.STORAGE_FTP_USER,
-      password: process.env.STORAGE_FTP_PASS,
-    });
+    if (process.env.WP_FTP_HOST != '') {
+      this.wp = new Storage({
+        host: process.env.WP_FTP_HOST,
+        port: process.env.WP_FTP_PORT,
+        user: process.env.WP_FTP_USER,
+        password: process.env.WP_FTP_PASS,
+      });
+    }
+    if (process.env.STORAGE_FTP_HOST != '') {
+      this.storage = new Storage({
+        host: process.env.STORAGE_FTP_HOST,
+        port: process.env.STORAGE_FTP_PORT,
+        user: process.env.STORAGE_FTP_USER,
+        password: process.env.STORAGE_FTP_PASS,
+      });
+    }
   }
   
   async connectStorage() {
-    await this.wp.connectFTP();
-    await this.storage.connectFTP();
+    if (process.env.WP_FTP_HOST != '') await this.wp.connectFTP();
+    if (process.env.STORAGE_FTP_HOST != '') await this.storage.connectFTP();
     return Promise.resolve(true);
   }
   
   async closeStorage() {
-    await this.wp.closeFTP();
-    await this.storage.closeFTP();
+    if (process.env.WP_FTP_HOST != '') await this.wp.closeFTP();
+    if (process.env.STORAGE_FTP_HOST != '') await this.storage.closeFTP();
     return Promise.resolve(true);
   }
     
