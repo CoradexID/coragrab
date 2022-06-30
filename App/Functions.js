@@ -1,6 +1,6 @@
 require('dotenv').config();
 const fs = require('fs');
-const client = require('https');
+const client = require('http');
 const serializer = require('php-serialize');
 
 class Functions {
