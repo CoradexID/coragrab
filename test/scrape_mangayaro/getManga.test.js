@@ -1,4 +1,4 @@
-const scraper = require('../../App/Scraper/Mangayaro.js');
+const scraper = require('../../App/Scraper/Kiryuu.js');
 
 (async () => {
   
