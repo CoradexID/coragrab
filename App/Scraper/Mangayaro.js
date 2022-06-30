@@ -151,7 +151,7 @@ class Scraper {
 
       const results = [];
       upd.each(function(v, i) {
-        if (v == 1) {
+        if (v == 0) {
           const manga = $(this).find('.utao .imgu a.series');
           manga.each(function(v, i) {
             const title = $(this).attr('title');
