@@ -15,10 +15,8 @@ class Functions {
   }
 
   downloadImage(url, filepath) {
-    console.log(url);
     return new Promise((resolve, reject) => {
       client.get(url, (res) => {
-        console.log(res);
         if (res.statusCode === 200) {
           res.pipe(fs.createWriteStream(filepath))
           .on('error', (err) => reject(new Error('error when save image')))
