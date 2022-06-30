@@ -2,7 +2,6 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 const fs = require('fs-extra');
 const functions = require('../Functions.js');
-const {JSDOM} = require('jsdom');
 require('dotenv').config();
 
 const MAIN_URL = 'https://mangayaro.com/';
@@ -146,36 +145,23 @@ class Scraper {
   getFeed() {
     return axios.get(MAIN_URL).then((res) => {
       const html = res.data;
-      // const $ = cheerio.load(html);
-      
-      const dom = new JSDOM(html).window.document;
-      const upd = dom.querySelectorAll('.listupd')[2];
-      const manga = upd.querySelectorAll('.utao .imgu a.series');
+      const $ = cheerio.load(html);
+
+      const upd = $('.listupd');
+
       const results = [];
-      for (var i = 0; i < manga.length; i++) {
-        const title = manga[i].getAttribute('title');
-        const url = manga[i].href;
-        results[i] = {
-          title,
-          url
+      upd.each(function(v, i) {
+        if (v == 2) {
+          const manga = $(this).find('.utao .imgu a.series');
+          manga.each(function(v, i) {
+            const title = $(this).attr('title');
+            const url = $(this).attr('href');
+            results.push({
+              title, url
+            });
+          });
         }
-      }
-
-      // const upd = $('.listupd');
-
-      // const results = [];
-      // upd.each(function(v, i) {
-      //   if (v == 2) {
-      //     const manga = $(this).find('.utao .imgu a.series');
-      //     manga.each(function(v, i) {
-      //       const title = $(this).attr('title');
-      //       const url = $(this).attr('href');
-      //       results.push({
-      //         title, url
-      //       });
-      //     });
-      //   }
-      // });
+      });
 
       return new Promise((resolve, reject) => {
         resolve(results);
