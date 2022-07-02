@@ -31,7 +31,7 @@ class Scraper {
       coverPath = filepath;
     }
     
-    const alternative = dom.querySelector('.alternative').textContent.trim();
+    const alternative = dom.querySelector('.alternative') ? dom.querySelector('.alternative').textContent.trim() : '';
     const score = dom.querySelector('div[itemprop="ratingValue"]').textContent.trim();
     const tables = dom.querySelectorAll('.tsinfo .imptdt');
 
@@ -54,6 +54,7 @@ class Scraper {
         artist = innerText.replace('Artist', '').trim();
       }
     }
+    
 
     const genres = [];
     const genreTabs = dom.querySelectorAll('.info-desc .mgen a');
