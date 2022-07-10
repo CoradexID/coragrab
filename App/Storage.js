@@ -7,6 +7,7 @@ class Storage {
 
   constructor(config) {
     this.client = new ftp.Client();
+    this.client.ftp.verbose = true;
     this.config = config;
   }
 
