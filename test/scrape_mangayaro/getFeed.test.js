@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-const scraper = require(process.env.HOME_DIR + 'App/Scraper/' + process.env.MAIN_TARGET + '.js');
+const scraper = require('../../App/Scraper/Mangayaro.js');
 
 (async () => {
   
