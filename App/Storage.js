@@ -17,7 +17,6 @@ class Storage {
       user: this.config.user,
       password: this.config.password,
       port: this.config.port,
-      secure: true
     });
     
     return Promise.resolve(true);
