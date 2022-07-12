@@ -29,8 +29,8 @@ class Scraper {
     }
     
     const alternative = dom.querySelector('.alternative') ? dom.querySelector('.alternative').textContent.trim() : '';
-    const score = dom.querySelector('div[itemprop="ratingValue"]').textContent.trim();
-    const tables = dom.querySelectorAll('.tsinfo .imptdt');
+    const score = dom.querySelector('span.score').textContent.trim();
+    const tables = dom.querySelectorAll('.post-content_item');
 
     let [type, status, published, author, artist] = Array(5).fill('');
     for (const table of tables) {
@@ -54,12 +54,12 @@ class Scraper {
     
 
     const genres = [];
-    const genreTabs = dom.querySelectorAll('.info-desc .mgen a');
+    const genreTabs = dom.querySelectorAll('.genres-content a');
     for (const genre of genreTabs) {
       genres.push(genre.textContent.trim());
     }
     const chapters = [];
-    const chapterlist = dom.querySelectorAll('#chapterlist ul li');
+    const chapterlist = dom.querySelectorAll('ul.main li');
     for (const chapter of chapterlist) {
       chapters.push({
         chapter: chapter.querySelector('a .chapternum').textContent.replace('Chapter ', ''),
