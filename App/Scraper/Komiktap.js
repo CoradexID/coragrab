@@ -91,7 +91,6 @@ class Scraper {
     fs.emptyDirSync(process.env.DOWNLOAD_LOCAL_PATH);
     const res = await axios.get(url);
     const html = res.data;
-    console.log(html);
     const dom = new JSDOM(html).window.document;
 
     const title = dom.querySelector('.headpost h1').textContent.trim();
@@ -102,6 +101,7 @@ class Scraper {
     const images = dom.querySelectorAll('#readerarea img');
     for (const image of images) {
       let src = image.src;
+      console.log(src);
       sources.push(src);
       if (options.replaceImageDomain) {
         src = functions.replaceDomain(src, options.replaceImageDomain);
