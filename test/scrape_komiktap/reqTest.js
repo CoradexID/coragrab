@@ -8,7 +8,7 @@ client.get(url, (res) => {
   if (res.statusCode === 200) {
     res.pipe(fs.createWriteStream(filepath))
     .on('error', (err) => reject(new Error('error when save image')))
-    .once('close', () => resolve(filepath));
+    .once('close', () => console.log(filepath));
   } else {
     // Consume response data to free up memory
     res.resume();
