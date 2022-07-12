@@ -12,6 +12,7 @@ class Scraper {
     fs.emptyDirSync(process.env.DOWNLOAD_LOCAL_PATH);
     const res = await axios.get(url);
     const html = res.data;
+    console.log(html);
     
     const dom = new JSDOM(html).window.document;
 
