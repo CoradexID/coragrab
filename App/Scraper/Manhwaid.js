@@ -59,7 +59,7 @@ class Scraper {
       genres.push(genre.textContent.trim());
     }
     const chapters = [];
-    const chapterlist = dom.querySelectorAll('ul.main li');
+    const chapterlist = dom.querySelectorAll('li.wp-manga-chapter');
     for (const chapter of chapterlist) {
       chapters.push({
         chapter: chapter.querySelector('a').textContent.replace('Chapter ', '').trim(),
