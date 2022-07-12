@@ -5,7 +5,7 @@ process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
   
   try {
   
-  const data = await scraper.getChapter('https://mangayaro.com/my-girlfriend-is-a-villain-chapter-110-bahasa-indonesia/');
+  const data = await scraper.getChapter('https://194.233.66.232/sextudy-group-chapter-28/');
   console.log(data);
   
   } catch (e) {
