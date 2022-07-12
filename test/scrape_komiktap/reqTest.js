@@ -7,15 +7,14 @@ const filepath = '/sdcard/test/test.png'
 client.get(url, (res) => {
   if (res.statusCode === 200) {
     res.pipe(fs.createWriteStream(filepath))
-    .on('error', (err) => reject(new Error('error when save image')))
+    .on('error', (err) => console.log('error when save image'))
     .once('close', () => console.log(filepath));
   } else {
     // Consume response data to free up memory
     res.resume();
-    reject(new Error(`Request Failed With a Status Code: ${res.statusCode}`));
+    consle.log(`Request Failed With a Status Code: ${res.statusCode}`);
   }
 })
 .on('error', (err) => {
   console.log(err);
-  reject(new Error('Error when scrape image'));
 });
