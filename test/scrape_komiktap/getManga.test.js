@@ -1,9 +1,8 @@
-const scraper = require('../../App/Scraper/Komiktap.js');
-process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
+const scraper = require('../../App/Scraper/Manhwaid.js');
 
 (async () => {
   
-  const data = await scraper.getManga('https://194.233.66.232/manga/sextudy-group/');
+  const data = await scraper.getManga('https://manhwaid.fun/manga/blissville/');
   console.log(data);
   
 })();
