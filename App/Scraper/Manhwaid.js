@@ -147,8 +147,7 @@ class Scraper {
       const html = res.data;
       const dom = new JSDOM(html).window.document;
 
-      const upd = dom.querySelectorAll('.listupd')[2];
-      const mangas = upd.querySelectorAll('.utao .imgu a.series');
+      const mangas = upd.querySelectorAll('.page-listing-item .manga');
       
       const results = [];
       for (const manga of mangas) {
