@@ -15,15 +15,12 @@ class Scraper {
     
     const dom = new JSDOM(html).window.document;
 
-    const title = dom.querySelector('.entry-title').textContent.trim();
-    const sinopsys = dom.querySelector('div[itemprop="description"] p').textContent.trim();
+    const title = dom.querySelector('.post-title h1').textContent.trim();
+    const sinopsys = dom.querySelector('.summary__content p').textContent.trim();
     
-    let cover = dom.querySelector('.thumb img').src;
+    let cover = dom.querySelector('.summary_image a img').src;
     let coverPath = null;
     if (downloadCover) {
-      // ONLY MANGAYARO
-      cover = cover.replace('cache.', '');
-      
       const time = functions.getTime();
       const filename = time.day + time.hour + time.minute + time.seconds + ".jpg";
       const filepath = process.env.DOWNLOAD_LOCAL_PATH + filename;
