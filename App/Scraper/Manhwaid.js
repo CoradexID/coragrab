@@ -41,8 +41,8 @@ class Scraper {
       if (innerText.includes('Status')) {
         status = innerText.replace('Status', '').trim();
       }
-      if (innerText.includes('Released')) {
-        published = innerText.replace('Released', '').trim();
+      if (innerText.includes('Release')) {
+        published = innerText.replace('Release', '').trim();
       }
       if (innerText.includes('Author')) {
         author = innerText.replace('Author', '').trim();
