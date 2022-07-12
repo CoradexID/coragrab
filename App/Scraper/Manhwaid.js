@@ -152,8 +152,8 @@ class Scraper {
       const results = [];
       for (const manga of mangas) {
         results.push({
-          title: manga.getAttribute('title'),
-          url: manga.href
+          title: manga.querySelector('a').getAttribute('title'),
+          url: manga.querySelector('a').href
         })
       }
 
