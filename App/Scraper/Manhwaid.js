@@ -61,6 +61,7 @@ class Scraper {
     const chapters = [];
     const chapterlist = dom.querySelectorAll('li.wp-manga-chapter');
     for (const chapter of chapterlist) {
+      console.log(chapter.innerHTML);
       chapters.push({
         chapter: chapter.querySelector('a').textContent.replace('Chapter ', '').trim(),
         url: chapter.querySelector('a').href
