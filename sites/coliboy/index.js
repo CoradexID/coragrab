@@ -25,29 +25,29 @@ async function run() {
         const insertedManga = await db.insertManga(mangaData);
         console.log(insertedManga.post_title);
         for (const chapter of mangaData.chapters) {
-          const chapterData = await scraper.getChapter(chapter.url, false, {replaceImageDomain: process.env.IMAGE_PROXY_URL});
+          const chapterData = await scraper.getChapter(chapter.url);
           chapterData.chapter = chapter.chapter;
           console.log('Posting Chapter', chapterData.chapter);
-          const insertedChapter = await db.insertChapter(insertedManga.ID, chapterData, false);
+          const insertedChapter = await db.insertChapter(insertedManga.ID, chapterData);
           console.log(insertedChapter.post_title);
         }
       }
 
       if (manga.status == 0) {
-        const mangaData = await scraper.getManga(feed.url, false);
+        const mangaData = await scraper.getManga(feed.url);
         const chapters = await db.chapterCheck(manga.data.ID, mangaData);
         console.log(chapters.length, 'Chapter Not Exist');
         for (const chapter of chapters) {
-          const chapterData = await scraper.getChapter(chapter.url, false, {replaceImageDomain: process.env.IMAGE_PROXY_URL});
+          const chapterData = await scraper.getChapter(chapter.url);
           chapterData.chapter = chapter.chapter;
           console.log('Posting Chapter', chapterData.chapter);
-          const insertedChapter = await db.insertChapter(manga.data.ID, chapterData, false);
+          const insertedChapter = await db.insertChapter(manga.data.ID, chapterData);
           console.log(insertedChapter.post_title);
         }
       }
     }
   } catch (e) {
-    console.log(e);
+    console.log(e.message);
   }
 
   await db.closeDatabase();
